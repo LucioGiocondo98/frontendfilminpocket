@@ -1,47 +1,34 @@
-import { useState, useEffect } from "react";
-import "../styles/TicketCounter.css";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 const TicketCounter = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  const [timeLeft, setTimeLeft] = useState("");
+  const { accessToken } = useAuth();
+  const [tickets, setTickets] = useState(null);
 
   useEffect(() => {
-    if (!user || !user.nextTicketRechargeTime) return;
+    if (!accessToken) return;
 
-    const intervalId = setInterval(() => {
-      const now = new Date();
-      const rechargeTime = new Date(user.nextTicketRechargeTime);
-      const difference = rechargeTime - now;
-
-      if (difference > 0) {
-        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((difference / 1000 / 60) % 60);
-        const seconds = Math.floor((difference / 1000) % 60);
-        setTimeLeft(
-          `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-            2,
-            "0"
-          )}:${String(seconds).padStart(2, "0")}`
-        );
-      } else {
-        setTimeLeft("Pronto!");
-        //aggiungere la logica per aggiornare i ticket dell'utente
-        clearInterval(intervalId);
-      }
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [user]);
-
-  if (!user) return null;
+    fetch("http://localhost:8080/users/me/tickets", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Errore nel recupero ticket");
+        }
+        return res.json();
+      })
+      .then((data) => setTickets(data.filmTickets))
+      .catch((err) => {
+        console.error("Errore durante il recupero dei ticket:", err);
+      });
+  }, [accessToken]);
 
   return (
-    <div className="ticket-counter-box">
-      <div className="ticket-info">
-        <i className="bi bi-ticket-detailed-fill ticket-icon"></i>
-        <span className="ticket-amount">{user.filmTickets}</span>
-      </div>
-      <div className="timer-info">{timeLeft}</div>
+    <div className="ticket-counter">
+      🎟️ Ticket disponibili:{" "}
+      <strong>{tickets !== null ? tickets : "Caricamento..."}</strong>
     </div>
   );
 };

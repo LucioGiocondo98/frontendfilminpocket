@@ -15,13 +15,11 @@ const AuthLayout = () => (
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AuthLayout />} />
-        <Route path="/login" element={<AuthLayout />} />
-        <Route path="/home" element={<HomePage />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<AuthLayout />} />
+      <Route path="/login" element={<AuthLayout />} />
+      <Route path="/home" element={<HomePage />} />
+    </Routes>
   );
 }
 
