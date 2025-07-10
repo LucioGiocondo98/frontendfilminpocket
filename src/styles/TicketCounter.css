@@ -1,0 +1,31 @@
+.ticket-counter-box {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid #d4a24d;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    color: white;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.ticket-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.ticket-icon {
+    font-size: 1.5rem;
+    color: #d4a24d;
+}
+.ticket-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: sans-serif;
+}
+.timer-info {
+    font-family: 'Kalam', cursive;
+    font-size: 0.9rem;
+    color: #e8e4d9;
+    letter-spacing: 1px;
+}
