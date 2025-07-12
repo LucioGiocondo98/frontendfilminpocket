@@ -1,6 +1,6 @@
 import { Card } from "react-bootstrap";
 
-export default function PersonCardComponent({ card }) {
+export default function PersonCard({ card }) {
   const getBorderStyle = (rarity) => {
     switch (rarity) {
       case "COMMON":
