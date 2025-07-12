@@ -3,6 +3,7 @@ import "./App.css";
 import { Container } from "react-bootstrap";
 import AuthForm from "./components/AuthForm";
 import HomePage from "./pages/HomePage";
+import CollectionPage from "./pages/CollectionPage";
 
 const AuthLayout = () => (
   <Container
@@ -19,6 +20,7 @@ function App() {
       <Route path="/" element={<AuthLayout />} />
       <Route path="/login" element={<AuthLayout />} />
       <Route path="/home" element={<HomePage />} />
+      <Route path="/collection" element={<CollectionPage />} />
     </Routes>
   );
 }

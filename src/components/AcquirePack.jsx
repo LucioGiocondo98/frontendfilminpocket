@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { Container, Row, Col, Button, Image } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Image,
+  Card,
+  Modal,
+} from "react-bootstrap";
+import MovieCard from "./MovieCards";
+import PersonCard from "./PersonCard";
 
 export default function AcquirePack() {
   const { accessToken } = useAuth();
   const [filmTickets, setFilmTickets] = useState(null);
   const [nextRecharge, setNextRecharge] = useState(null);
   const [timeLeft, setTimeLeft] = useState("");
+  const [acquiredCards, setAcquiredCards] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:8080/users/me/tickets", {
@@ -52,14 +64,35 @@ export default function AcquirePack() {
     return () => clearInterval(interval);
   }, [nextRecharge]);
 
+  const handleAcquirePack = () => {
+    fetch("http://localhost:8080/me/acquire-pack", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore durante apertura pacchetto");
+        return res.json();
+      })
+      .then((cards) => {
+        setAcquiredCards(cards);
+        setFilmTickets((prev) => prev - 1);
+        setShowModal(true);
+      })
+      .catch((err) => {
+        console.error("Errore apertura pacchetto:", err);
+        alert("Errore: forse non hai abbastanza ticket!");
+      });
+  };
+
   return (
     <Container fluid className="text-center mt-4">
       <Row className="justify-content-center">
         <Col xs={10} sm={8} md={6} lg={4} xl={3} className="position-relative">
-          {/* Pacchetto */}
           <Image src="/kendrick.webp" alt="Pacchetto" fluid rounded />
 
-          {/* Badge dei ticket */}
           {filmTickets !== null && (
             <div
               className="position-absolute"
@@ -81,7 +114,6 @@ export default function AcquirePack() {
         </Col>
       </Row>
 
-      {/* Bottone sotto (metà larghezza pacchetto) */}
       <Row className="justify-content-center mt-3">
         <Col xs={6} sm={5} md={3} lg={2}>
           <Button
@@ -89,13 +121,13 @@ export default function AcquirePack() {
             className="w-100"
             size="lg"
             disabled={filmTickets === 0}
+            onClick={handleAcquirePack}
           >
             APRI PACCHETTO
           </Button>
         </Col>
       </Row>
 
-      {/* Timer ricarica */}
       <Row className="mt-3">
         <Col>
           {filmTickets === 0 && nextRecharge && (
@@ -103,6 +135,31 @@ export default function AcquirePack() {
           )}
         </Col>
       </Row>
+
+      {/* Modal per mostrare le carte acquisite */}
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        size="lg"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Hai trovato queste carte!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row>
+            {acquiredCards.map((card, idx) => (
+              <Col key={idx} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                {card.cardType === "MOVIE" ? (
+                  <MovieCard card={card} />
+                ) : (
+                  <PersonCard card={card} />
+                )}
+              </Col>
+            ))}
+          </Row>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 }
