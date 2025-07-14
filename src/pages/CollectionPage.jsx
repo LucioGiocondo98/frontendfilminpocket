@@ -3,6 +3,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import SidebarFiltri from "../components/SidebarFiltri";
 import CardGrid from "../components/CardGrid";
 import { useAuth } from "../context/AuthContext";
+import BottomNavbar from "../components/BottomNavbar";
+import TopNavbar from "../components/TopNavbar";
 
 export default function CollectionPage() {
   const { accessToken } = useAuth();
@@ -39,7 +41,8 @@ export default function CollectionPage() {
 
   return (
     <Container fluid className="mt-4">
-      <Row>
+      <TopNavbar />
+      <Row className="pt-5">
         <Col xs={12} md={3} lg={2} className="mb-3">
           <SidebarFiltri onFilterChange={setFilters} />
         </Col>
@@ -47,6 +50,7 @@ export default function CollectionPage() {
           <CardGrid cards={cards} />
         </Col>
       </Row>
+      <BottomNavbar />
     </Container>
   );
 }

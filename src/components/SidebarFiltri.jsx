@@ -13,9 +13,21 @@ export default function SidebarFiltri({ onFilterChange }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="text-light">
+    <Form
+      onSubmit={handleSubmit}
+      className="p-3 rounded text-light"
+      style={{
+        backgroundColor: "#1f1f1f",
+        border: "1px solid #2a2a2a",
+        fontFamily: "'Lobster', cursive",
+      }}
+    >
+      <h5 className="text-warning mb-4 text-center">
+        <i className="bi bi-film"></i> Filtra le tue carte
+      </h5>
+
       <Form.Group className="mb-3">
-        <Form.Label>Rarità</Form.Label>
+        <Form.Label className="text-warning">Rarità</Form.Label>
         <Form.Select value={rarity} onChange={(e) => setRarity(e.target.value)}>
           <option value="">Tutte</option>
           <option value="COMMON">Common</option>
@@ -25,7 +37,7 @@ export default function SidebarFiltri({ onFilterChange }) {
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Genere</Form.Label>
+        <Form.Label className="text-warning">Genere</Form.Label>
         <Form.Control
           type="text"
           value={genre}
@@ -35,16 +47,17 @@ export default function SidebarFiltri({ onFilterChange }) {
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Anno</Form.Label>
+        <Form.Label className="text-warning">Anno</Form.Label>
         <Form.Control
           type="number"
           value={year}
           onChange={(e) => setYear(e.target.value)}
+          placeholder="Es. 1972"
         />
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Tipo Carta</Form.Label>
+        <Form.Label className="text-warning">Tipo Carta</Form.Label>
         <Form.Select
           value={cardType}
           onChange={(e) => setCardType(e.target.value)}
@@ -56,7 +69,12 @@ export default function SidebarFiltri({ onFilterChange }) {
         </Form.Select>
       </Form.Group>
 
-      <Button variant="warning" type="submit" className="w-100">
+      <Button
+        variant="warning"
+        type="submit"
+        className="w-100 mt-3 text-uppercase fw-bold"
+        style={{ fontFamily: "'Lobster', cursive" }}
+      >
         Filtra
       </Button>
     </Form>

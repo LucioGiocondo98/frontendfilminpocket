@@ -1,9 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 body {
-    font-family: 'Lobster', cursive;
-    background-color: #121212; 
-    background-image: radial-gradient(circle, #282828 0%, #121212 80%);
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: 'Lobster', cursive;
+  background-color: #121212;
+  background-image: radial-gradient(circle, #282828 0%, #121212 80%);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+}
+body,
+.navbar,
+.navbar-brand,
+.nav-link,
+.offcanvas,
+.offcanvas-body,
+.navbar-text,.bottom-navbar-container,
+.bottom-navbar-container .nav-link,
+.bottom-navbar-container .nav-text  {
+  font-family: 'Lobster', cursive !important;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
 }

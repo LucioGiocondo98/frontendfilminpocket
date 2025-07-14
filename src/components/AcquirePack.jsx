@@ -75,7 +75,7 @@ export default function AcquirePack() {
     <Container fluid className="text-light mt-4">
       {/* Sezione Ticket a sinistra */}
       <Row>
-        <Col xs={3} lg={5}>
+        <Col xs={3} lg={3}>
           <div className="ticket-box">
             <div>
               <i className="bi bi-ticket-detailed ticket-icon"></i>

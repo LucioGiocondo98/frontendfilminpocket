@@ -6,7 +6,7 @@ const MainContent = () => {
   return (
     <Container className="text-center py-4">
       <Row className="justify-content-center mb-3">
-        <Col xs={12} md={6}>
+        <Col xs={12}>
           <AcquirePack />
         </Col>
       </Row>

@@ -25,9 +25,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  useEffect(() => {
-    // Opzionale: verifica validità token a ogni mount
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <AuthContext.Provider value={{ accessToken, user, login, logout }}>

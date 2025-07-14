@@ -1,26 +1,21 @@
 import { Navbar, Offcanvas, Nav, Container, Image } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // Assicurati che il percorso sia corretto
+import { useAuth } from "../context/AuthContext";
 
 const TopNavbar = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout(); // Rimuove token
-    navigate("/login"); // Ti riporta all'AuthForm
+    logout();
+    navigate("/login");
   };
 
   return (
     <Navbar bg="dark" variant="dark" expand={false} className="fixed-top">
       <Container fluid>
         {/* Titolo sempre a sinistra */}
-        <Navbar.Brand
-          className="ms-2"
-          style={{ fontFamily: "Lobster, cursive", fontSize: "1.8rem" }}
-        >
-          FilmInPocket
-        </Navbar.Brand>
+        <Navbar.Brand className="ms-2">FilmInPocket</Navbar.Brand>
 
         {/* Icona profilo */}
         <Image
