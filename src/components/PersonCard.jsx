@@ -1,6 +1,11 @@
 import { Card } from "react-bootstrap";
 
 export default function PersonCard({ card }) {
+  if (!card) {
+    console.error("Errore: card è undefined in PersonCard");
+    return null;
+  }
+
   const getBorderStyle = (rarity) => {
     switch (rarity) {
       case "COMMON":
@@ -21,24 +26,34 @@ export default function PersonCard({ card }) {
         border: getBorderStyle(card.rarity),
         borderRadius: "20px",
         height: "100%",
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
-        fontFamily: "Lobster",
+        position: "relative",
+        overflow: "hidden",
+        fontFamily: "Lobster, cursive",
       }}
     >
-      <Card.Img
-        src={
-          card.imageUrl || "https://via.placeholder.com/300x400?text=No+Image"
-        }
-        alt={card.name}
+      {card.imageUrl && (
+        <Card.Img
+          src={card.imageUrl}
+          alt={card.name}
+          style={{
+            height: "100%",
+            width: "100%",
+            objectFit: "cover",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            opacity: 0.15,
+          }}
+        />
+      )}
+      <Card.Body
         style={{
-          height: "250px",
-          objectFit: "cover",
-          borderTopLeftRadius: "20px",
-          borderTopRightRadius: "20px",
+          zIndex: 10,
+          position: "relative",
+          backgroundColor: "rgba(0, 0, 0, 0.7)", // 👈 aggiunto
         }}
-      />
-      <Card.Body>
-        <ul className="ps-3" style={{ listStyleType: "none" }}>
+      >
+        <ul className="ps-0" style={{ listStyleType: "none" }}>
           <li>
             <strong>Nome:</strong> {card.name}
           </li>
@@ -46,14 +61,16 @@ export default function PersonCard({ card }) {
             <strong>Descrizione:</strong> {card.description}
           </li>
           <li>
-            <strong>Nato il:</strong> {card.bornDate}
+            <strong>Nato il:</strong> {card.bornDate || "N/A"}
           </li>
           <li>
             <strong>Filmografia:</strong>
             <ul>
-              {card.filmography?.map((film, idx) => (
-                <li key={idx}>{film}</li>
-              ))}
+              {card.filmography && card.filmography.length > 0 ? (
+                card.filmography.map((film, idx) => <li key={idx}>{film}</li>)
+              ) : (
+                <li>Nessun titolo disponibile</li>
+              )}
             </ul>
           </li>
         </ul>

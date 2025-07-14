@@ -3,6 +3,7 @@ import { Form, Button, Alert, Card, Row, Col } from "react-bootstrap";
 import "../styles/AuthForm.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import ToastMessage from "./ToastMessage"; // <-- nuovo componente
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,9 +13,17 @@ const AuthForm = () => {
   const [error, setError] = useState("");
   const [isClapping, setIsClapping] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth(); // <--- USA IL CONTEXT
-  const API_URL = "http://localhost:8080";
+  const { login } = useAuth();
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
 
+  const API_URL = "http://localhost:8080";
+  const showToast = (message, variant = "success") => {
+    setToast({ show: true, message, variant });
+  };
   const handleClap = () => {
     if (isClapping) return;
     setIsClapping(true);
@@ -44,11 +53,12 @@ const AuthForm = () => {
       .then(handleResponse)
       .then((data) => {
         login(data.accessToken, data.user);
-        alert("Login effettuato con successo!");
+        showToast("Login effettuato con successo!", "success");
         navigate("/home");
       })
       .catch((err) => {
         setError(err.message);
+        showToast(err.message || "Errore durante il login", "danger");
         console.error(err);
       });
   };
@@ -62,13 +72,17 @@ const AuthForm = () => {
     })
       .then(handleResponse)
       .then(() => {
-        alert("Registrazione completata! Ora puoi effettuare il login.");
+        showToast(
+          "Registrazione completata! Ora puoi effettuare il login.",
+          "success"
+        );
         setIsLogin(true);
         setError("");
         navigate("/");
       })
       .catch((err) => {
         setError(err.message);
+        showToast(err.message || "Errore durante la registrazione", "danger");
         console.error(err);
       });
   };
@@ -101,8 +115,6 @@ const AuthForm = () => {
             <h3 className="form-title">
               {isLogin ? "FilmInPocket" : "Registrati"}
             </h3>
-
-            {error && <Alert variant="danger">{error}</Alert>}
 
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
@@ -162,6 +174,12 @@ const AuthForm = () => {
           </Card.Body>
         </Card>
       </div>
+      <ToastMessage
+        show={toast.show}
+        message={toast.message}
+        variant={toast.variant}
+        onClose={() => setToast({ ...toast, show: false })}
+      />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext";
  */
 const ProtectedRoute = ({ children }) => {
   const { accessToken } = useAuth();
+  console.log("accessToken in ProtectedRoute:", accessToken);
 
   return accessToken ? children : <Navigate to="/login" replace />;
 };
