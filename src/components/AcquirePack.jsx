@@ -97,7 +97,7 @@ export default function AcquirePack() {
         <Col xs={8} lg={10}>
           <div className="text-center floating-box">
             <img
-              src="/kendrick.webp"
+              src="/PackFilmInPocket.png"
               alt="Pacchetto"
               className="img-fluid rounded cinematic-pack"
             />
