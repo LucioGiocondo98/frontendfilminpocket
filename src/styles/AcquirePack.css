@@ -1,0 +1,29 @@
+.floating-box {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.ticket-box {
+  background-color: #1f1f1f;
+  border: 2px solid orange;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: orange;
+}
+
+.ticket-icon {
+  font-size: 1.5rem;
+}
+
+.cinematic-pack {
+  border: 3px solid orange;
+  box-shadow: 0 0 15px orange;
+}

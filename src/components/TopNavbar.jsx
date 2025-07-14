@@ -1,7 +1,16 @@
 import { Navbar, Offcanvas, Nav, Container, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // Assicurati che il percorso sia corretto
 
 const TopNavbar = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout(); // Rimuove token
+    navigate("/login"); // Ti riporta all'AuthForm
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand={false} className="fixed-top">
       <Container fluid>
@@ -42,7 +51,7 @@ const TopNavbar = () => {
               <Nav.Link as={Link} to="/deck" className="text-white">
                 Mazzi
               </Nav.Link>
-              <Nav.Link as={Link} to="/logout" className="text-white">
+              <Nav.Link onClick={handleLogout} className="text-white">
                 Logout
               </Nav.Link>
             </Nav>

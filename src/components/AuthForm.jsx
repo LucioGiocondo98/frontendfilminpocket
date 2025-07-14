@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Button, Alert, Card, Row, Col } from "react-bootstrap";
 import "../styles/AuthForm.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,23 +12,21 @@ const AuthForm = () => {
   const [error, setError] = useState("");
   const [isClapping, setIsClapping] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth(); // <--- USA IL CONTEXT
   const API_URL = "http://localhost:8080";
 
-  // Funzione per avviare l'animazione
   const handleClap = () => {
     if (isClapping) return;
     setIsClapping(true);
     setTimeout(() => {
       setIsClapping(false);
-    }, 900); // La durata deve corrispondere a quella dell'animazione CSS
+    }, 900);
   };
 
-  // Funzione per gestire l'invio del form
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleClap(); // <<--- L'ANIMAZIONE PARTE QUI!
+    handleClap();
 
-    // La logica di login/registrazione procede immediatamente dopo
     if (isLogin) {
       handleLogin();
     } else {
@@ -44,8 +43,7 @@ const AuthForm = () => {
     })
       .then(handleResponse)
       .then((data) => {
-        localStorage.setItem("accessToken", data.accessToken);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        login(data.accessToken, data.user);
         alert("Login effettuato con successo!");
         navigate("/home");
       })
@@ -94,7 +92,6 @@ const AuthForm = () => {
 
   return (
     <div className="clapperboard">
-      {/* MODIFICA: Rimosso l'onClick da qui */}
       <div className={`clapper ${isClapping ? "clapping" : ""}`}></div>
 
       <div className="board">
@@ -143,7 +140,6 @@ const AuthForm = () => {
                 />
               </Form.Group>
 
-              {/* --- INIZIO MODIFICHE PER CENTRARE IL BOTTONE --- */}
               <Row>
                 <Col className="d-flex justify-content-center">
                   <Button
@@ -155,7 +151,6 @@ const AuthForm = () => {
                   </Button>
                 </Col>
               </Row>
-              {/* --- FINE MODIFICHE --- */}
             </Form>
 
             <div className="toggle-text">

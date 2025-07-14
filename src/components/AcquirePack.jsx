@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import "../styles/AcquirePack.css";
 
 export default function AcquirePack() {
   const { accessToken } = useAuth();
   const [filmTickets, setFilmTickets] = useState(null);
   const [nextRecharge, setNextRecharge] = useState(null);
   const [timeLeft, setTimeLeft] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:8080/users/me/tickets", {
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -52,25 +54,31 @@ export default function AcquirePack() {
     return () => clearInterval(interval);
   }, [nextRecharge]);
 
+  const handleOpenPack = () => {
+    fetch("http://localhost:8080/me/acquire-pack", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore nell'apertura del pacco");
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Carte estratte:", data);
+        setFilmTickets((prev) => prev - 1);
+        navigate("/pack-opened", { state: { cards: data } });
+      })
+      .catch((err) => console.error("Errore apertura pacco:", err));
+  };
+
   return (
     <Container fluid className="text-light mt-4">
       {/* Sezione Ticket a sinistra */}
       <Row>
         <Col xs={3} lg={5}>
-          <div
-            style={{
-              backgroundColor: "#1f1f1f",
-              border: "2px solid orange",
-              borderRadius: "10px",
-              padding: "10px",
-              textAlign: "center",
-              fontWeight: "bold",
-              fontSize: "1.2rem",
-              color: "orange",
-            }}
-          >
+          <div className="ticket-box">
             <div>
-              <i className="bi bi-ticket-detailed"></i>
+              <i className="bi bi-ticket-detailed ticket-icon"></i>
             </div>
             <div>{filmTickets ?? "..."}</div>
           </div>
@@ -84,14 +92,14 @@ export default function AcquirePack() {
         </Col>
       </Row>
 
-      {/* Sezione pacchetto centrato */}
+      {/* Sezione pacchetto centrato con animazione */}
       <Row className="justify-content-center mt-4">
         <Col xs={8} lg={10}>
-          <div className="text-center">
+          <div className="text-center floating-box">
             <img
               src="/kendrick.webp"
               alt="Pacchetto"
-              className="img-fluid rounded"
+              className="img-fluid rounded cinematic-pack"
             />
           </div>
         </Col>
@@ -100,13 +108,16 @@ export default function AcquirePack() {
       {/* Bottone apertura pacco */}
       <Row className="justify-content-center mt-3">
         <Col xs={4}>
-          <Button variant="warning" className="w-100" size="lg">
+          <Button
+            variant="warning"
+            className="w-100"
+            size="lg"
+            onClick={handleOpenPack}
+          >
             AZIONE
           </Button>
         </Col>
       </Row>
-
-      {/* Timer se necessario */}
     </Container>
   );
 }

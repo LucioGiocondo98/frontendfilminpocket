@@ -1,6 +1,6 @@
 import { Card } from "react-bootstrap";
 
-export default function PersonCard({ card }) {
+export default function MovieCard({ card }) {
   const getBorderStyle = (rarity) => {
     switch (rarity) {
       case "COMMON":
@@ -40,21 +40,19 @@ export default function PersonCard({ card }) {
       <Card.Body>
         <ul className="ps-3" style={{ listStyleType: "none" }}>
           <li>
-            <strong>Nome:</strong> {card.name}
+            <strong>Titolo:</strong> {card.name}
           </li>
           <li>
             <strong>Descrizione:</strong> {card.description}
           </li>
           <li>
-            <strong>Nato il:</strong> {card.bornDate}
+            <strong>Anno:</strong> {card.releaseYear}
           </li>
           <li>
-            <strong>Filmografia:</strong>
-            <ul>
-              {card.filmography?.map((film, idx) => (
-                <li key={idx}>{film}</li>
-              ))}
-            </ul>
+            <strong>Regista:</strong> {card.directorName}
+          </li>
+          <li>
+            <strong>Genere:</strong> {card.genre}
           </li>
         </ul>
       </Card.Body>

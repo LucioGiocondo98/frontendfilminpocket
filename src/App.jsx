@@ -1,9 +1,12 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { Container } from "react-bootstrap";
+
 import AuthForm from "./components/AuthForm";
 import HomePage from "./pages/HomePage";
 import CollectionPage from "./pages/CollectionPage";
+import PackOpenedPage from "./pages/PackOpenedPage";
+import ProtectedRoute from "./components/ProtectedRoute"; // <-- Usa questo nome
 
 const AuthLayout = () => (
   <Container
@@ -19,8 +22,32 @@ function App() {
     <Routes>
       <Route path="/" element={<AuthLayout />} />
       <Route path="/login" element={<AuthLayout />} />
-      <Route path="/home" element={<HomePage />} />
-      <Route path="/collection" element={<CollectionPage />} />
+
+      {/* Pagine protette */}
+      <Route
+        path="/home"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/collection"
+        element={
+          <ProtectedRoute>
+            <CollectionPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pack-opened"
+        element={
+          <ProtectedRoute>
+            <PackOpenedPage />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

@@ -9,7 +9,7 @@ const BottomNavbar = () => {
       <Container fluid className="p-0">
         <Row className="justify-content-evenly text-center gx-0">
           <Col xs={3} className="bottom-icon p-0">
-            <Link to="/" className="d-block py-2 nav-link-custom">
+            <Link to="/home" className="d-block py-2 nav-link-custom">
               <House size={20} />
               <div className="nav-text">Home</div>
             </Link>
