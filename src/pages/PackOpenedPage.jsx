@@ -27,7 +27,7 @@ export default function PackOpenedPage() {
   const renderCard = (card, index) => {
     const cardType = card.cardType?.toUpperCase();
     return (
-      <Col xs={6} md={4} lg={4} xl={3} key={index} className="mb-4">
+      <Col xs={6} md={6} lg={4} xl={4} key={index} className="mb-4">
         {cardType === "MOVIE" ? (
           <MovieCard card={card} />
         ) : (

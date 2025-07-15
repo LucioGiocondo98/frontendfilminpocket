@@ -10,6 +10,9 @@ const TopNavbar = () => {
     logout();
     navigate("/login");
   };
+  const handleHome = () => {
+    navigate("/home");
+  };
 
   return (
     <Navbar bg="dark" variant="dark" expand={false} className="fixed-top">
@@ -40,6 +43,9 @@ const TopNavbar = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="flex-column">
+              <Nav.Link onClick={handleHome} className="text-white">
+                Home
+              </Nav.Link>
               <Nav.Link as={Link} to="/collection" className="text-white">
                 Collezione
               </Nav.Link>

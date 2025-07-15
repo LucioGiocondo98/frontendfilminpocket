@@ -5,8 +5,9 @@ import { Container } from "react-bootstrap";
 import AuthForm from "./components/AuthForm";
 import HomePage from "./pages/HomePage";
 import CollectionPage from "./pages/CollectionPage";
+import CardDetailsPage from "./pages/CardDetailsPage";
 import PackOpenedPage from "./pages/PackOpenedPage";
-import ProtectedRoute from "./components/ProtectedRoute"; // <-- Usa questo nome
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const AuthLayout = () => (
   <Container
@@ -37,6 +38,14 @@ function App() {
         element={
           <ProtectedRoute>
             <CollectionPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/cards/:id"
+        element={
+          <ProtectedRoute>
+            <CardDetailsPage />
           </ProtectedRoute>
         }
       />
