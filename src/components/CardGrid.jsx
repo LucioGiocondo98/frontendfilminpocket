@@ -13,7 +13,7 @@ export default function CardGrid({ cards }) {
   }
 
   return (
-    <Row className="gx-3 gy-4">
+    <Row className="g-3">
       {cards.map((card) => {
         const cardType = card.cardType?.toUpperCase();
         return (

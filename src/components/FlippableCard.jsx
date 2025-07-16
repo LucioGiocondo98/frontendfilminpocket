@@ -1,4 +1,4 @@
-import { useState } from "react";
+/*import { useState } from "react";
 import { Card } from "react-bootstrap";
 import "../styles/CardFlip.css";
 import MovieCard from "./MovieCard";
@@ -26,3 +26,4 @@ export default function FlippableCard({ card, isMovie = true }) {
     </div>
   );
 }
+*/

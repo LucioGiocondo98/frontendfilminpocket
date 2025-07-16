@@ -1,6 +1,5 @@
 .home-page-container {
-    padding-top: 56px; /* Altezza della navbar superiore */
-    padding-bottom: 70px; /* Altezza della navbar inferiore */
+   /* Altezza della navbar inferiore */
     min-height: 100vh;
 }
 

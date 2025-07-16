@@ -8,7 +8,7 @@ import TopNavbar from "../components/TopNavbar";
 
 export default function CollectionPage() {
   const { accessToken } = useAuth();
-  console.log("Acces token in Collection Page: ", accessToken); // ✅ PRIMA DI QUALSIASI USO
+  console.log("Acces token in Collection Page: ", accessToken);
   const [cards, setCards] = useState([]);
   const [filters, setFilters] = useState({});
 

@@ -3,7 +3,7 @@ import pellicola from "../assets/pellicola.jpg";
 
 export default function MovieCard({ card }) {
   const getBorderStyle = (rarity) => {
-    switch (rarity) {
+    switch (card.rarity) {
       case "COMMON":
         return "5px solid white";
       case "RARE":
@@ -17,12 +17,9 @@ export default function MovieCard({ card }) {
 
   return (
     <Card
-      className=" text-black"
+      className="text-black"
       style={{
         border: getBorderStyle(card.rarity),
-        //backgroundImage: `url(${pellicola})`,
-        //backgroundSize: "cover",
-        //backgroundPosition: "center",
         borderRadius: "20px",
         height: "100%",
         fontFamily: "'Lobster', cursive",
@@ -34,43 +31,43 @@ export default function MovieCard({ card }) {
           backgroundImage: `url(${pellicola})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backdropFilter: "blur(2px)",
           borderRadius: "20px",
           height: "100%",
         }}
       >
-        {/* Card Image */}
         {card.imageUrl && (
           <Card.Img
             variant="top"
             src={card.imageUrl}
             alt={card.name}
-            className="card-img-top"
             style={{
               height: "200px",
               objectFit: "cover",
-              borderTopLeftRadius: "20px",
-              borderTopRightRadius: "20px",
             }}
           />
         )}
 
-        {/* Card Body */}
-        <Card.Body className="m-auto">
-          <ul className=" flex-grow-1 text-black m-auto">
+        <Card.Body
+          className="m-auto"
+          style={{
+            color: "black",
+            borderRadius: "12px",
+          }}
+        >
+          <Card.Title className="text-center">{card.name}</Card.Title>
+          <ul className="ps-2" style={{ fontFamily: "Roboto, sans-serif" }}>
             <li>
-              <strong>Nome:</strong> {card.name}
+              <strong>Descrizione:</strong> <span>{card.description}</span>
             </li>
             <li>
-              <strong>Descrizione:</strong> {card.description}
+              <strong>Anno di uscita:</strong> <span>{card.releaseYear}</span>
             </li>
             <li>
-              <strong>Anno di uscita:</strong> {card.releaseYear}
+              <strong>Regista:</strong> <span>{card.directorName}</span>
             </li>
             <li>
-              <strong>Regista:</strong> {card.directorName}
-            </li>
-            <li>
-              <strong>Genere:</strong> {card.genre}
+              <strong>Genere:</strong> <span>{card.genre}</span>
             </li>
           </ul>
         </Card.Body>

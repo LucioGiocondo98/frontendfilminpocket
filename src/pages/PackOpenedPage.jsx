@@ -20,7 +20,7 @@ export default function PackOpenedPage() {
       const timer = setTimeout(() => setCount(count - 1), 1000);
       return () => clearTimeout(timer);
     } else {
-      setShowCountdown(false); // Fine countdown
+      setShowCountdown(false);
     }
   }, [count, showCountdown]);
 

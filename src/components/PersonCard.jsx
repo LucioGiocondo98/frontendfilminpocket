@@ -17,23 +17,21 @@ export default function PersonCard({ card }) {
 
   return (
     <Card
-      className=" text-black"
+      className="text-black"
       style={{
         border: getBorderStyle(card.rarity),
-        //backgroundImage: `url(${pellicola})`,
-        //backgroundSize: "cover",
-        //backgroundPosition: "center",
         borderRadius: "20px",
         height: "100%",
         fontFamily: "'Lobster', cursive",
       }}
     >
       <div
-        className="p-3"
+        className="p-2"
         style={{
           backgroundImage: `url(${pellicola})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backdropFilter: "blur(2px)",
           borderRadius: "20px",
           height: "100%",
         }}
@@ -43,36 +41,41 @@ export default function PersonCard({ card }) {
             variant="top"
             src={card.imageUrl}
             alt={card.name}
-            className="card-img-top"
             style={{
               height: "200px",
               objectFit: "cover",
-              borderTopLeftRadius: "20px",
-              borderTopRightRadius: "20px",
             }}
           />
         )}
 
-        <Card.Body className="m-auto">
-          <ul className=" flex-grow-1 text-black m-auto">
+        <Card.Body
+          className="m-auto"
+          style={{
+            color: "black",
+            borderRadius: "12px",
+          }}
+        >
+          <Card.Title className="text-center">{card.name}</Card.Title>
+          <ul className="ps-2" style={{ fontFamily: "Roboto, sans-serif" }}>
             <li>
-              <strong>Nome:</strong> {card.name}
+              <strong>Descrizione:</strong> <span>{card.description}</span>
             </li>
             <li>
-              <strong>Descrizione:</strong> {card.description}
-            </li>
-            <li>
-              <strong>Data di nascita:</strong> {card.bornDate}
+              <strong>Data di nascita:</strong> <span>{card.bornDate}</span>
             </li>
             <li>
               <strong>Filmografia:</strong>
-              <ul style={{ paddingLeft: "1rem", marginBottom: 0 }}>
+              <ul style={{ paddingLeft: "1rem" }}>
                 {Array.isArray(card.filmography) ? (
                   card.filmography.map((film, index) => (
-                    <li key={index}>{film}</li>
+                    <li key={index}>
+                      <span>{film}</span>
+                    </li>
                   ))
                 ) : (
-                  <li>{card.filmography}</li>
+                  <li>
+                    <span>{card.filmography}</span>
+                  </li>
                 )}
               </ul>
             </li>

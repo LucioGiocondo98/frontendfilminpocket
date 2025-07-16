@@ -22,7 +22,7 @@
     z-index: 10;
 }
 
-/* REGOLA RIMOSSA: .clapperboard:hover .clapper è stato eliminato */
+
 
 .board {
     background-color: #2a2a2a;
@@ -148,23 +148,22 @@
     }
 }
 
-/* NUOVE REGOLE PER L'ANIMAZIONE DEL CLAP */
+/*ANIMAZIONE DEL CLAP*/
 .clapper.clapping {
-    /* Applica l'animazione definita sotto */
     animation: clap-animation 0.9s ease-in-out;
 }
 
 @keyframes clap-animation {
     0% {
-        transform: rotate(-5deg); /* Stato iniziale */
+        transform: rotate(-5deg); 
     }
     25% {
-        transform: rotate(-15deg); /* Si alza un po' di più */
+        transform: rotate(-15deg); 
     }
     50% {
-        transform: rotate(0deg);  /* Posizione orizzontale (il "clap") */
+        transform: rotate(0deg);
     }
     100% {
-        transform: rotate(-5deg); /* Ritorna allo stato iniziale */
+        transform: rotate(-5deg);
     }
 }

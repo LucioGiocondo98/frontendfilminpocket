@@ -1,33 +1,63 @@
-.navbar {
+/*.top-navbar {
+  background-color: #121212;
+  border-bottom: 1px solid #2a2a2a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1030;
+}
+
+.top-navbar-brand {
+  font-family: 'Lobster', cursive;
+  color: #cccccc !important;
+  font-size: 1.6rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.top-navbar-brand:hover {
+  color: #ffffff !important;
+  text-shadow: 0 0 5px #ffc107;
+}
+*/
+.top-navbar {
+  background-color: #121212;
+  border-bottom: 1px solid #2a2a2a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1030;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-/* Assicura che le immagini profilo siano rotonde e ben centrate */
-.navbar img {
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #ffc107; /* Giallo tipo "warning" */
-}
 
-/* Brand con font cursivo già definito inline, ma se vuoi spostarlo qui: */
-.navbar-brand {
+
+.top-navbar-link {
+  color: #ffc107  !important;
+  font-size: 1rem;
   font-family: 'Lobster', cursive;
-  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Spazio tra icona e testo */
+  padding: 6px 12px;
+  transition: background-color 0.2s ease;
 }
 
-/* Offcanvas menu - colore di sfondo e link */
-.offcanvas.bg-dark {
-  background-color: #212529 !important;
+.top-navbar-link:hover {
+  background-color: #2a2a2a;
+  color: #ffc107 !important;
+}
+.top-navbar-brand {
+  font-family: 'Lobster', cursive;
+  color: #f0c420 !important;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
 }
 
-.offcanvas .nav-link {
-  color: #f8f9fa; /* bianco chiaro */
-  margin-bottom: 0.5rem;
+.navbar-title-text {
+  color: #f0c420;
+  font-size: 1.5rem;
+  text-shadow: 0 0 4px #000;
 }
 
-.offcanvas .nav-link:hover {
-  color: #ffc107; /* giallo "warning" al passaggio */
+.menu-off{
+  color: #f0c420;
 }
-
-
