@@ -1,6 +1,6 @@
 .home-page-container {
-   /* Altezza della navbar inferiore */
     min-height: 100vh;
+    margin-top: 0 !important;
 }
 
 .profile-pic {

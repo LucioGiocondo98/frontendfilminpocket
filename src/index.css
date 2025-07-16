@@ -18,7 +18,7 @@ body,
 .bottom-navbar-container .nav-link,
 .bottom-navbar-container .nav-text  {
   font-family: 'Lobster', cursive !important;
-  font-size: 0.75rem;
+  font-size: 1rem;
   letter-spacing: 0.5px;
 }
 .custom-card {

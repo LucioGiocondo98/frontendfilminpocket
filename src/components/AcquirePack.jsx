@@ -72,7 +72,7 @@ export default function AcquirePack() {
   };
 
   return (
-    <Container fluid className="text-light mt-4">
+    <Container fluid className="text-light">
       {/* Sezione Ticket a sinistra */}
       <Row>
         <Col xs={3} lg={3}>
