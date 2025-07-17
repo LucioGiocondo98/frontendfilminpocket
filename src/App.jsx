@@ -8,6 +8,11 @@ import CollectionPage from "./pages/CollectionPage";
 import CardDetailsPage from "./pages/CardDetailsPage";
 import PackOpenedPage from "./pages/PackOpenedPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminPage from "./components/AdminHomeContent";
+import AdminRoute from "./components/AdminRoute";
+import CreateCardPage from "./pages/CreateCardPage";
+import EditCardPage from "./pages/EditCardPage";
+import DeleteCardPage from "./pages/DeleteCardPage";
 
 const AuthLayout = () => (
   <Container
@@ -55,6 +60,38 @@ function App() {
           <ProtectedRoute>
             <PackOpenedPage />
           </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminPage />
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/create"
+        element={
+          <AdminRoute>
+            <CreateCardPage />
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/edit"
+        element={
+          <AdminRoute>
+            <EditCardPage />
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/delete"
+        element={
+          <AdminRoute>
+            <DeleteCardPage />
+          </AdminRoute>
         }
       />
     </Routes>

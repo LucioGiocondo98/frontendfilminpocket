@@ -7,7 +7,7 @@ import { TiFilm } from "react-icons/ti";
 import { TbCardsFilled } from "react-icons/tb";
 const BottomNavbar = () => {
   return (
-    <div className="bottom-navbar-container d-lg-none fixed-bottom bg-dark border-secondary shadow-sm">
+    <div className="bottom-navbar-container bg-dark border-secondary shadow-sm">
       <Container fluid className="p-0">
         <Row className="justify-content-evenly text-center gx-0">
           <Col xs={3} className="bottom-icon p-0">

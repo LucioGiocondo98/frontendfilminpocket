@@ -95,27 +95,15 @@ export default function AcquirePack() {
       {/* Sezione pacchetto centrato con animazione */}
       <Row className="justify-content-center mt-4">
         <Col xs={8} lg={10}>
-          <div className="text-center floating-box">
+          <div className="text-center floating-box pack-container">
             <img
               src="/PackFilmInPocket.png"
               alt="Pacchetto"
               className="img-fluid rounded cinematic-pack"
+              style={{ cursor: "pointer" }}
+              onClick={handleOpenPack}
             />
           </div>
-        </Col>
-      </Row>
-
-      {/* Bottone apertura pacco */}
-      <Row className="justify-content-center mt-3">
-        <Col xs={4}>
-          <Button
-            variant="warning"
-            className="w-100"
-            size="lg"
-            onClick={handleOpenPack}
-          >
-            AZIONE
-          </Button>
         </Col>
       </Row>
     </Container>

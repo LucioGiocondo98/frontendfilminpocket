@@ -7,13 +7,13 @@ import BottomNavbar from "../components/BottomNavbar";
 import TopNavbar from "../components/TopNavbar";
 
 export default function CollectionPage() {
-  const { accessToken } = useAuth();
+  const { accessToken, user } = useAuth();
   console.log("Acces token in Collection Page: ", accessToken);
   const [cards, setCards] = useState([]);
   const [filters, setFilters] = useState({});
 
   useEffect(() => {
-    if (!accessToken) return;
+    if (!accessToken || !user) return;
 
     const params = new URLSearchParams();
     if (filters.rarity) params.append("rarity", filters.rarity);
@@ -22,7 +22,12 @@ export default function CollectionPage() {
     if (filters.cardType) params.append("cardType", filters.cardType);
     params.append("size", 100);
 
-    fetch(`http://localhost:8080/cards/collection?${params.toString()}`, {
+    const endpoint =
+      user.role === "ROLE_ADMIN"
+        ? `http://localhost:8080/admin/cards?${params.toString()}`
+        : `http://localhost:8080/cards/collection?${params.toString()}`;
+
+    fetch(endpoint, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((res) => {
@@ -31,13 +36,13 @@ export default function CollectionPage() {
       })
       .then((data) => {
         console.log("Dati ricevuti:", data);
-        setCards(data.content);
+        setCards(data.content || data);
       })
       .catch((err) => {
         console.error("Errore fetch carte:", err);
         setCards([]);
       });
-  }, [filters, accessToken]);
+  }, [filters, accessToken, user]);
 
   return (
     <Container fluid className="mt-4">

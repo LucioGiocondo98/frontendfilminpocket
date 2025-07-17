@@ -1,0 +1,39 @@
+.admin-page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-grid-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1px;
+  border: 2px solid silver;
+  box-shadow: 0 0 15px rgba(192, 192, 192, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-grid-item {
+  background-color: #1e1e1e;
+  border: 1px solid silver;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.admin-grid-item:hover {
+  background-color: #2c2c2c;
+  transform: scale(1.02);
+}
+
+.logo-cell {
+  background-color: #1e1e1e;
+  cursor: default;
+}

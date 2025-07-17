@@ -52,9 +52,15 @@ const AuthForm = () => {
     })
       .then(handleResponse)
       .then((data) => {
+        console.log("User dopo login:", data.user);
         login(data.accessToken, data.user);
         showToast("Login effettuato con successo!", "success");
-        navigate("/home");
+
+        if (data.user.role === "ROLE_ADMIN") {
+          navigate("/admin");
+        } else {
+          navigate("/home");
+        }
       })
       .catch((err) => {
         setError(err.message);

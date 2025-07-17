@@ -1,7 +1,12 @@
 .bottom-navbar-container {
   background-color: #121212;
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  bottom: 0;
+  z-index: 1030;
+  width: 100%;
 }
+
 
 .bottom-icon {
   background-color: #1a1a1a;
