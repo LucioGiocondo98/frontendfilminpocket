@@ -4,8 +4,10 @@ import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
 import { useAuth } from "../context/AuthContext";
-import PersonCard from "../components/PersonCard";
-import MovieCard from "../components/MovieCard";
+import CardForm from "../components/CardForm";
+import ImageUpload from "../components/ImageUpload";
+import CardPreview from "../components/CardPreview";
+import ToastMessage from "../components/ToastMessage";
 
 const CreateCardPage = () => {
   const { accessToken } = useAuth();
@@ -23,6 +25,11 @@ const CreateCardPage = () => {
   const [filmographyInput, setFilmographyInput] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
 
   const resetForm = () => {
     setFormData({
@@ -40,10 +47,12 @@ const CreateCardPage = () => {
   };
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+    if (name === "cardType") {
+      setCardType(value);
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFilmographyChange = (e) => {
@@ -53,6 +62,10 @@ const CreateCardPage = () => {
       ...prev,
       filmography: value.split(",").map((s) => s.trim()),
     }));
+  };
+
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
   };
 
   const handleCreate = (e) => {
@@ -80,11 +93,25 @@ const CreateCardPage = () => {
         return res.json();
       })
       .then((data) => {
-        console.log("Card creata:", data);
-        if (imageFile) uploadImage(data.id);
-        resetForm(); // ✅ reset dopo successo
+        if (imageFile) {
+          uploadImage(data.id);
+        } else {
+          setToast({
+            show: true,
+            message: "Card creata con successo!",
+            variant: "success",
+          });
+          resetForm();
+        }
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error(err);
+        setToast({
+          show: true,
+          message: err.message || "Errore",
+          variant: "danger",
+        });
+      });
   };
 
   const uploadImage = (id) => {
@@ -103,139 +130,51 @@ const CreateCardPage = () => {
         if (!res.ok) throw new Error("Errore upload immagine");
         return res.json();
       })
-      .then((data) => {
-        console.log("Immagine aggiornata:", data);
+      .then(() => {
+        setToast({
+          show: true,
+          message: "Immagine caricata con successo!",
+          variant: "success",
+        });
       })
-      .catch(console.error)
-      .finally(() => setUploading(false));
+      .catch((err) => {
+        console.error(err);
+        setToast({
+          show: true,
+          message: err.message || "Errore",
+          variant: "danger",
+        });
+      })
+      .finally(() => {
+        setUploading(false);
+        resetForm();
+      });
   };
-
-  const renderTypeSpecificFields = () => {
-    switch (cardType) {
-      case "MOVIE":
-        return (
-          <>
-            <Form.Group className="mb-2">
-              <Form.Label>Anno uscita</Form.Label>
-              <Form.Control
-                name="releaseYear"
-                value={formData.releaseYear}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label>Genere</Form.Label>
-              <Form.Control
-                name="genre"
-                value={formData.genre}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label>Regista</Form.Label>
-              <Form.Control
-                name="directorName"
-                value={formData.directorName}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </>
-        );
-      case "ACTOR":
-      case "DIRECTOR":
-        return (
-          <>
-            <Form.Group className="mb-2">
-              <Form.Label>Data di nascita</Form.Label>
-              <Form.Control
-                name="bornDate"
-                value={formData.bornDate}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-2">
-              <Form.Label>Filmografia</Form.Label>
-              <Form.Control
-                name="filmography"
-                value={filmographyInput}
-                onChange={handleFilmographyChange}
-              />
-            </Form.Group>
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
-  const imagePreviewUrl = imageFile ? URL.createObjectURL(imageFile) : null;
-
   return (
-    <Container fluid className="text-light full-height page-wrapper">
-      <Row>
-        <Col>
-          <TopNavbar />
-        </Col>
-      </Row>
-      <Container className="py-4 flex-grow-1 page-content">
+    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
+      <TopNavbar />
+
+      <Container
+        fluid
+        className="flex-grow-1"
+        style={{ padding: "2rem 1rem 100px" }}
+      >
         <Row>
-          <Col md={6}>
-            <h3>Crea una nuova card</h3>
+          <h3>Crea una nuova card</h3>
+
+          <Col md={5}>
             <Form onSubmit={handleCreate}>
-              <Form.Group className="mb-2">
-                <Form.Label>Tipo di Card</Form.Label>
-                <Form.Select
-                  value={cardType}
-                  onChange={(e) => setCardType(e.target.value)}
-                >
-                  <option value="MOVIE">Movie</option>
-                  <option value="ACTOR">Actor</option>
-                  <option value="DIRECTOR">Director</option>
-                </Form.Select>
-              </Form.Group>
-
-              <Form.Group className="mb-2">
-                <Form.Label>Nome</Form.Label>
-                <Form.Control
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-2">
-                <Form.Label>Descrizione</Form.Label>
-                <Form.Control
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-2">
-                <Form.Label>Rarità</Form.Label>
-                <Form.Select
-                  name="rarity"
-                  value={formData.rarity}
-                  onChange={handleChange}
-                >
-                  <option value="COMMON">COMMON</option>
-                  <option value="RARE">RARE</option>
-                  <option value="EPIC">EPIC</option>
-                </Form.Select>
-              </Form.Group>
-
-              {renderTypeSpecificFields()}
-
-              <Form.Group className="mb-2">
-                <Form.Label>Immagine</Form.Label>
-                <Form.Control
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setImageFile(e.target.files[0])}
-                />
-              </Form.Group>
-
+              <CardForm
+                cardType={cardType}
+                formData={formData}
+                onChange={handleChange}
+                filmographyInput={filmographyInput}
+                onFilmographyChange={handleFilmographyChange}
+              />
+              <ImageUpload
+                imageFile={imageFile}
+                onImageChange={handleImageChange}
+              />
               <Button type="submit" variant="warning" className="mt-2">
                 {uploading ? (
                   <>
@@ -248,28 +187,25 @@ const CreateCardPage = () => {
             </Form>
           </Col>
 
-          <Col
-            md={6}
-            className="d-flex align-items-center justify-content-center"
-          >
-            {cardType === "MOVIE" ? (
-              <MovieCard
-                card={{ ...formData, cardType, imageUrl: imagePreviewUrl }}
-              />
-            ) : (
-              <PersonCard
-                card={{ ...formData, cardType, imageUrl: imagePreviewUrl }}
-              />
-            )}
+          <Col md={6}>
+            <CardPreview
+              cardType={cardType}
+              formData={formData}
+              imageFile={imageFile}
+            />
           </Col>
         </Row>
       </Container>
-      <Row>
-        <Col>
-          <BottomNavbar />
-        </Col>
-      </Row>
-    </Container>
+
+      <BottomNavbar />
+
+      <ToastMessage
+        show={toast.show}
+        message={toast.message}
+        variant={toast.variant}
+        onClose={() => setToast({ ...toast, show: false })}
+      />
+    </div>
   );
 };
 

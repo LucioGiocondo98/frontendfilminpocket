@@ -82,3 +82,11 @@
   font-size: 1rem;
   margin-top: 0.5rem;
 }
+html,
+body,
+#__root,
+.container-fluid.full-height {
+  height: 100%;
+}
+
+

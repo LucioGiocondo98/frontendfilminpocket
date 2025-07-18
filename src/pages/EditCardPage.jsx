@@ -2,19 +2,49 @@ import { useState } from "react";
 import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
-import CardFetcherWithPreview from "../components/CardFetcherWithPreview";
 import { useAuth } from "../context/AuthContext";
+import CardForm from "../components/CardForm";
+import ImageUpload from "../components/ImageUpload";
+import CardPreview from "../components/CardPreview";
+import ToastMessage from "../components/ToastMessage";
 
 const EditCardPage = () => {
   const { accessToken } = useAuth();
   const [cardData, setCardData] = useState(null);
   const [updatedData, setUpdatedData] = useState({});
-  const [uploading, setUploading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFilmographyChange = (e) => {
+    const value = e.target.value;
+    setUpdatedData((prev) => ({
+      ...prev,
+      filmography: value.split(",").map((s) => s.trim()),
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
 
   const handleUpdate = (e) => {
     e.preventDefault();
     if (!cardData) return;
+
+    const payload = {
+      ...cardData,
+      ...updatedData,
+    };
 
     fetch(`http://localhost:8080/cards/${cardData.id}`, {
       method: "PUT",
@@ -22,16 +52,31 @@ const EditCardPage = () => {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...cardData, ...updatedData }),
+      body: JSON.stringify(payload),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Errore aggiornamento");
         return res.json();
       })
       .then((data) => {
-        if (imageFile) uploadImage(data.id);
+        if (imageFile) {
+          uploadImage(data.id);
+        } else {
+          setToast({
+            show: true,
+            message: "Card aggiornata con successo!",
+            variant: "success",
+          });
+        }
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error(err);
+        setToast({
+          show: true,
+          message: err.message || "Errore",
+          variant: "danger",
+        });
+      });
   };
 
   const uploadImage = (id) => {
@@ -50,71 +95,109 @@ const EditCardPage = () => {
         if (!res.ok) throw new Error("Errore upload immagine");
         return res.json();
       })
-      .then(console.log)
-      .catch(console.error)
+      .then(() => {
+        setToast({
+          show: true,
+          message: "Card aggiornata e immagine caricata!",
+          variant: "success",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        setToast({
+          show: true,
+          message: err.message || "Errore",
+          variant: "danger",
+        });
+      })
       .finally(() => setUploading(false));
   };
 
-  const handleInputChange = (e) => {
-    setUpdatedData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
   return (
-    <Container fluid className="text-light">
+    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
       <TopNavbar />
-      <Container className="py-4">
+      <Container
+        fluid
+        className="flex-grow-1"
+        style={{ padding: "2rem 1rem 100px" }}
+      >
         <Row>
           <Col md={6}>
-            <CardFetcherWithPreview onCardFetched={setCardData} />
-            {cardData && (
-              <Form onSubmit={handleUpdate} className="mt-4">
-                <h5>Modifica Campi</h5>
-                <Form.Group className="mb-2">
-                  <Form.Label>Nome</Form.Label>
-                  <Form.Control
-                    name="name"
-                    defaultValue={cardData.name}
+            <Form onSubmit={handleUpdate} className="mt-4">
+              <h5>Modifica una card esistente (inserisci ID)</h5>
+              <Form.Group className="mb-3">
+                <Form.Label>ID della Card</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci ID"
+                  onChange={(e) => {
+                    const id = e.target.value;
+                    if (id) {
+                      fetch(`http://localhost:8080/cards/${id}`, {
+                        headers: { Authorization: `Bearer ${accessToken}` },
+                      })
+                        .then((res) => {
+                          if (!res.ok) throw new Error("Card non trovata");
+                          return res.json();
+                        })
+                        .then((data) => setCardData(data))
+                        .catch(console.error);
+                    }
+                  }}
+                />
+              </Form.Group>
+              {cardData && (
+                <>
+                  <CardForm
+                    cardType={cardData.cardType}
+                    formData={{ ...cardData, ...updatedData }}
                     onChange={handleInputChange}
+                    filmographyInput={(
+                      updatedData.filmography || cardData.filmography
+                    )?.join(", ")}
+                    onFilmographyChange={handleFilmographyChange}
                   />
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Descrizione</Form.Label>
-                  <Form.Control
-                    name="description"
-                    defaultValue={cardData.description}
-                    onChange={handleInputChange}
+                  <ImageUpload
+                    imageFile={imageFile}
+                    onImageChange={handleImageChange}
                   />
-                </Form.Group>
-                <Form.Group className="mb-2">
-                  <Form.Label>Immagine</Form.Label>
-                  <Form.Control
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setImageFile(e.target.files[0])}
-                  />
-                </Form.Group>
-                <Button type="submit" variant="warning">
-                  {uploading ? (
-                    <>
-                      Aggiornamento... <Spinner size="sm" />
-                    </>
-                  ) : (
-                    "Salva Modifiche"
-                  )}
-                </Button>
-              </Form>
-            )}
+                  <Button type="submit" variant="warning" className="mt-2">
+                    {uploading ? (
+                      <>
+                        Aggiornamento...{" "}
+                        <Spinner animation="border" size="sm" />
+                      </>
+                    ) : (
+                      "Salva Modifiche"
+                    )}
+                  </Button>
+                </>
+              )}
+            </Form>
           </Col>
+
           <Col
             md={6}
             className="d-flex align-items-center justify-content-center"
           >
-            {/* Preview già inclusa in CardFetcherWithPreview */}
+            {cardData && (
+              <CardPreview
+                cardType={cardData.cardType}
+                formData={{ ...cardData, ...updatedData }}
+                imageFile={imageFile}
+              />
+            )}
           </Col>
         </Row>
       </Container>
       <BottomNavbar />
-    </Container>
+      <ToastMessage
+        show={toast.show}
+        message={toast.message}
+        variant={toast.variant}
+        onClose={() => setToast({ ...toast, show: false })}
+      />
+    </div>
   );
 };
 

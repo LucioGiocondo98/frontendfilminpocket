@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import TopNavbar from "./TopNavbar";
 import BottomNavbar from "./BottomNavbar";
 import "../styles/AdminPage.css";
+import { GiFilmSpool } from "react-icons/gi";
 
 const AdminHomeContent = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const AdminHomeContent = () => {
   return (
     <Container fluid className="admin-page-container text-light">
       <Row className="justify-content-center align-items-center flex-grow-1 text-center">
-        <Col xs={10} md={8} lg={6}>
+        <Col xs={12} md={8} lg={6}>
           <div className="admin-grid-box">
             <div
               className="admin-grid-item"
@@ -37,12 +38,8 @@ const AdminHomeContent = () => {
               Card
             </div>
             <div className="admin-grid-item logo-cell">
-              <img
-                src="/FilmInPocketLogo.png"
-                alt="Logo"
-                className="img-fluid"
-                style={{ maxHeight: "60px" }}
-              />
+              <GiFilmSpool size={40} />
+              <span className="ms-2 navbar">FilmInPocket</span>
             </div>
           </div>
         </Col>

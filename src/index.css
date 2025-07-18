@@ -36,3 +36,6 @@ body,
 .custom-card.epic:hover {
   box-shadow: 0 6px 18px rgba(255, 215, 0, 0.6);
 }
+.content-wrapper {
+  padding-bottom: 6rem !important;
+}
