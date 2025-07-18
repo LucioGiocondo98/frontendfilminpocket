@@ -1,104 +1,117 @@
+// DeckBuilder.jsx
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import CardGrid from "../components/CardGrid";
+import DeckSidebar from "../components/DeckSidebar";
 import { useAuth } from "../context/AuthContext";
-import ToastMessage from "./ToastMessage";
-import CardGrid from "./CardGrid";
-import "../styles/DeckBuilder.css";
 
 const DeckBuilder = () => {
   const { accessToken } = useAuth();
+  const [mode, setMode] = useState(null);
   const [cards, setCards] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [toast, setToast] = useState({
-    show: false,
-    message: "",
-    variant: "success",
-  });
+  const [decks, setDecks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/cards/collection", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Dati ricevuti:", data);
-        if (Array.isArray(data.content)) {
-          setCards(data.content);
-        } else {
-          console.error("La risposta non contiene un array di card:", data);
-          setCards([]);
-        }
+    if (mode === "create") {
+      fetch("http://localhost:8080/cards/collection", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       })
-      .catch((err) => console.error("Errore nel fetch delle carte", err));
-  }, [accessToken]);
+        .then((res) => res.json())
+        .then((data) => setCards(data.content || []))
+        .catch(console.error);
+    } else if (mode === "view") {
+      fetch("http://localhost:8080/decks", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => setDecks(data))
+        .catch(console.error);
+    }
+  }, [mode, accessToken]);
 
-  const toggleSelect = (id) => {
+  const handleCardClick = (cardId) => {
     setSelected((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+      prev.includes(cardId)
+        ? prev.filter((id) => id !== cardId)
+        : [...prev, cardId]
     );
   };
 
   const handleSaveDeck = () => {
-    const body = {
+    const deck = {
       name: "Mazzo Personalizzato",
       cardIds: selected,
     };
 
-    console.log("Deck da salvare:", body);
-
     fetch("http://localhost:8080/decks", {
-      // FIX se serve: aggiungi /api se configurato
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(deck),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Errore creazione mazzo");
+        if (!res.ok) throw new Error("Errore salvataggio mazzo");
         return res.json();
       })
       .then(() => {
-        setToast({
-          show: true,
-          message: "Mazzo creato con successo!",
-          variant: "success",
-        });
+        setMode("view");
         setSelected([]);
       })
-      .catch((err) => {
-        setToast({ show: true, message: err.message, variant: "danger" });
-      });
+      .catch((err) => console.error(err));
   };
 
   return (
-    <>
-      <CardGrid
-        cards={cards}
-        selectedIds={selected}
-        onCardClick={toggleSelect}
-      />
+    <Container fluid className="text-light pt-4">
+      <Row>
+        <Col md={4}>
+          <DeckSidebar setMode={setMode} />
+        </Col>
+        <Col md={8}>
+          {mode === "create" && (
+            <>
+              <h4>Seleziona le carte per il tuo mazzo</h4>
+              <CardGrid
+                cards={cards}
+                onCardClick={handleCardClick}
+                selectedCards={selected}
+                mode="deck"
+              />
+              <div className="d-flex justify-content-end mt-3">
+                <Button variant="success" onClick={handleSaveDeck}>
+                  Salva Mazzo
+                </Button>
+              </div>
+            </>
+          )}
 
-      {cards.length > 0 && (
-        <div className="d-flex justify-content-center mt-4">
-          <Button
-            variant="success"
-            onClick={handleSaveDeck}
-            disabled={selected.length === 0}
-          >
-            Salva Mazzo
-          </Button>
-        </div>
-      )}
-
-      <ToastMessage
-        show={toast.show}
-        message={toast.message}
-        variant={toast.variant}
-        onClose={() => setToast({ ...toast, show: false })}
-      />
-    </>
+          {mode === "view" && (
+            <>
+              <h4>I tuoi Deck</h4>
+              {decks.length === 0 ? (
+                <p>Nessun mazzo disponibile</p>
+              ) : (
+                decks.map((deck) => (
+                  <div
+                    key={deck.id}
+                    className="mb-3 border rounded p-3 bg-secondary"
+                  >
+                    <h5>{deck.name}</h5>
+                    <small>{deck.cards?.length || 0} carte</small>
+                  </div>
+                ))
+              )}
+            </>
+          )}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

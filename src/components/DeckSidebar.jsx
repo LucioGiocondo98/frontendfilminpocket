@@ -8,21 +8,28 @@ const DeckSidebar = ({ setMode }) => {
         className="rounded-pill py-3"
         onClick={() => setMode("create")}
       >
-        Crea Mazzo
+        Crea Deck
       </Button>
       <Button
         variant="outline-light"
         className="rounded-pill py-3"
         onClick={() => setMode("edit")}
       >
-        Modifica Mazzo
+        Modifica Deck
       </Button>
       <Button
         variant="outline-light"
         className="rounded-pill py-3"
         onClick={() => setMode("delete")}
       >
-        Elimina Mazzo
+        Elimina Deck
+      </Button>
+      <Button
+        variant="outline-light"
+        className="rounded-pill py-3"
+        onClick={() => setMode("view")}
+      >
+        I miei Deck
       </Button>
     </Stack>
   );

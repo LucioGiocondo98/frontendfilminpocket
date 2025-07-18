@@ -1,3 +1,4 @@
+// EditCardPage.jsx
 import { useState } from "react";
 import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import TopNavbar from "../components/TopNavbar";
@@ -10,8 +11,10 @@ import ToastMessage from "../components/ToastMessage";
 
 const EditCardPage = () => {
   const { accessToken } = useAuth();
-  const [cardData, setCardData] = useState(null);
-  const [updatedData, setUpdatedData] = useState({});
+  const [inputId, setInputId] = useState("");
+  const [formCard, setFormCard] = useState(null);
+  const [cardType, setCardType] = useState("");
+  const [filmographyInput, setFilmographyInput] = useState("");
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [toast, setToast] = useState({
@@ -20,14 +23,41 @@ const EditCardPage = () => {
     variant: "success",
   });
 
-  const handleInputChange = (e) => {
+  const handleFetch = () => {
+    if (!inputId) return;
+    fetch(`http://localhost:8080/cards/${inputId}`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Card non trovata");
+        return res.json();
+      })
+      .then((data) => {
+        setFormCard(data);
+        setCardType(data.cardType);
+        setFilmographyInput((data.filmography || []).join(", "));
+      })
+      .catch((err) => {
+        console.error(err);
+        setFormCard(null);
+        setToast({ show: true, message: err.message, variant: "danger" });
+      });
+  };
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setUpdatedData((prev) => ({ ...prev, [name]: value }));
+    if (!formCard) return;
+    if (name === "cardType") {
+      setCardType(value);
+    } else {
+      setFormCard((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleFilmographyChange = (e) => {
     const value = e.target.value;
-    setUpdatedData((prev) => ({
+    setFilmographyInput(value);
+    setFormCard((prev) => ({
       ...prev,
       filmography: value.split(",").map((s) => s.trim()),
     }));
@@ -37,45 +67,33 @@ const EditCardPage = () => {
     setImageFile(e.target.files[0]);
   };
 
-  const handleUpdate = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!cardData) return;
+    if (!formCard || !inputId) return;
 
-    const payload = {
-      ...cardData,
-      ...updatedData,
-    };
-
-    fetch(`http://localhost:8080/cards/${cardData.id}`, {
+    fetch(`http://localhost:8080/cards/${inputId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ ...formCard, cardType }),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Errore aggiornamento");
+        if (!res.ok) throw new Error("Errore aggiornamento card");
         return res.json();
       })
       .then((data) => {
-        if (imageFile) {
-          uploadImage(data.id);
-        } else {
-          setToast({
-            show: true,
-            message: "Card aggiornata con successo!",
-            variant: "success",
-          });
-        }
+        if (imageFile) uploadImage(data.id);
+        setToast({
+          show: true,
+          message: "Card aggiornata con successo!",
+          variant: "success",
+        });
       })
       .catch((err) => {
         console.error(err);
-        setToast({
-          show: true,
-          message: err.message || "Errore",
-          variant: "danger",
-        });
+        setToast({ show: true, message: err.message, variant: "danger" });
       });
   };
 
@@ -95,21 +113,8 @@ const EditCardPage = () => {
         if (!res.ok) throw new Error("Errore upload immagine");
         return res.json();
       })
-      .then(() => {
-        setToast({
-          show: true,
-          message: "Card aggiornata e immagine caricata!",
-          variant: "success",
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        setToast({
-          show: true,
-          message: err.message || "Errore",
-          variant: "danger",
-        });
-      })
+      .then(() => console.log("Immagine aggiornata"))
+      .catch(console.error)
       .finally(() => setUploading(false));
   };
 
@@ -122,68 +127,62 @@ const EditCardPage = () => {
         style={{ padding: "2rem 1rem 100px" }}
       >
         <Row>
-          <Col md={6}>
-            <Form onSubmit={handleUpdate} className="mt-4">
-              <h5>Modifica una card esistente (inserisci ID)</h5>
-              <Form.Group className="mb-3">
-                <Form.Label>ID della Card</Form.Label>
+          <Col md={5}>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleFetch();
+              }}
+              className="mb-3"
+            >
+              <Form.Group>
+                <Form.Label>ID della Card da modificare</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder="Inserisci ID"
-                  onChange={(e) => {
-                    const id = e.target.value;
-                    if (id) {
-                      fetch(`http://localhost:8080/cards/${id}`, {
-                        headers: { Authorization: `Bearer ${accessToken}` },
-                      })
-                        .then((res) => {
-                          if (!res.ok) throw new Error("Card non trovata");
-                          return res.json();
-                        })
-                        .then((data) => setCardData(data))
-                        .catch(console.error);
-                    }
-                  }}
+                  value={inputId}
+                  onChange={(e) => setInputId(e.target.value)}
                 />
               </Form.Group>
-              {cardData && (
-                <>
-                  <CardForm
-                    cardType={cardData.cardType}
-                    formData={{ ...cardData, ...updatedData }}
-                    onChange={handleInputChange}
-                    filmographyInput={(
-                      updatedData.filmography || cardData.filmography
-                    )?.join(", ")}
-                    onFilmographyChange={handleFilmographyChange}
-                  />
-                  <ImageUpload
-                    imageFile={imageFile}
-                    onImageChange={handleImageChange}
-                  />
-                  <Button type="submit" variant="warning" className="mt-2">
-                    {uploading ? (
-                      <>
-                        Aggiornamento...{" "}
-                        <Spinner animation="border" size="sm" />
-                      </>
-                    ) : (
-                      "Salva Modifiche"
-                    )}
-                  </Button>
-                </>
-              )}
+              <Button type="submit" variant="info" className="mt-2">
+                Carica Card
+              </Button>
             </Form>
+
+            {formCard && (
+              <Form onSubmit={handleSubmit}>
+                <CardForm
+                  cardType={cardType}
+                  formData={formCard}
+                  onChange={handleChange}
+                  filmographyInput={filmographyInput}
+                  onFilmographyChange={handleFilmographyChange}
+                />
+                <ImageUpload
+                  imageFile={imageFile}
+                  onImageChange={handleImageChange}
+                />
+                <Button type="submit" variant="warning" className="mt-2">
+                  {uploading ? (
+                    <>
+                      Caricamento... <Spinner animation="border" size="sm" />
+                    </>
+                  ) : (
+                    "Aggiorna Card"
+                  )}
+                </Button>
+              </Form>
+            )}
           </Col>
 
           <Col
             md={6}
             className="d-flex align-items-center justify-content-center"
           >
-            {cardData && (
+            {formCard && (
               <CardPreview
-                cardType={cardData.cardType}
-                formData={{ ...cardData, ...updatedData }}
+                cardType={cardType}
+                formData={formCard}
                 imageFile={imageFile}
               />
             )}

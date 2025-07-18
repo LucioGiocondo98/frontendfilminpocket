@@ -45,9 +45,10 @@ export default function CollectionPage() {
   }, [filters, accessToken, user]);
 
   return (
-    <Container fluid className="mt-4">
+    <Container fluid>
       <TopNavbar />
-      <Row className="pt-5">
+      {/*devo aggiungere un paddding bottom 4rem da qualche parte*/}
+      <Row className="pt-5 pb-5">
         <Col xs={12} md={3} lg={2} className="mb-3">
           <SidebarFiltri onFilterChange={setFilters} />
         </Col>

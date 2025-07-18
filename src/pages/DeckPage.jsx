@@ -17,15 +17,7 @@ const DeckPage = () => {
         className="flex-grow-1"
         style={{ padding: "2rem 1rem 100px" }}
       >
-        <Row>
-          <Col md={4}>
-            <DeckSidebar setMode={setMode} />
-          </Col>
-          <Col md={8}>
-            {mode === "create" && <DeckBuilder />}
-            {/* Qui aggiungeremo EditDeck e DeleteDeck */}
-          </Col>
-        </Row>
+        <DeckBuilder />
       </Container>
       <BottomNavbar />
     </div>
