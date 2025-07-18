@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Row, Col, Button, Alert, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
 import CardPreview from "../components/CardPreview";
@@ -8,6 +8,7 @@ import { useAuth } from "../context/AuthContext";
 
 const DeleteCardPage = () => {
   const { accessToken } = useAuth();
+  const [inputId, setInputId] = useState("");
   const [cardToDelete, setCardToDelete] = useState(null);
   const [toast, setToast] = useState({
     show: false,
@@ -15,9 +16,9 @@ const DeleteCardPage = () => {
     variant: "success",
   });
 
-  const handleFetch = (id) => {
-    if (!id) return;
-    fetch(`http://localhost:8080/cards/${id}`, {
+  const handleFetch = () => {
+    if (!inputId) return;
+    fetch(`http://localhost:8080/cards/${inputId}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((res) => {
@@ -27,6 +28,7 @@ const DeleteCardPage = () => {
       .then((data) => setCardToDelete(data))
       .catch((err) => {
         console.error(err);
+        setCardToDelete(null);
         setToast({
           show: true,
           message: err.message || "Errore",
@@ -36,8 +38,8 @@ const DeleteCardPage = () => {
   };
 
   const handleDelete = () => {
-    if (!cardToDelete) return;
-    fetch(`http://localhost:8080/cards/${cardToDelete.id}`, {
+    if (!inputId) return;
+    fetch(`http://localhost:8080/cards/${inputId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -51,6 +53,7 @@ const DeleteCardPage = () => {
           variant: "success",
         });
         setCardToDelete(null);
+        setInputId("");
       })
       .catch((err) => {
         console.error(err);
@@ -71,16 +74,26 @@ const DeleteCardPage = () => {
         style={{ padding: "2rem 1rem 100px" }}
       >
         <Row>
-          <Col md={6}>
-            <Form className="mb-3">
+          <Col xs={5}>
+            <Form
+              className="mb-3"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleFetch();
+              }}
+            >
               <Form.Group>
                 <Form.Label>ID della Card</Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   placeholder="Inserisci ID"
-                  onChange={(e) => handleFetch(e.target.value)}
+                  value={inputId}
+                  onChange={(e) => setInputId(e.target.value)}
                 />
               </Form.Group>
+              <Button type="submit" variant="info" className="mt-2">
+                Carica Card
+              </Button>
             </Form>
 
             {cardToDelete && (
@@ -91,7 +104,7 @@ const DeleteCardPage = () => {
           </Col>
 
           <Col
-            md={6}
+            xs={5}
             className="d-flex align-items-center justify-content-center"
           >
             {cardToDelete && (

@@ -1,0 +1,9 @@
+.selectable-card {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+.selectable-card.selected {
+  border: 3px solid limegreen;
+  transform: scale(1.05);
+}

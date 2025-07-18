@@ -13,6 +13,7 @@ import AdminRoute from "./components/AdminRoute";
 import CreateCardPage from "./pages/CreateCardPage";
 import EditCardPage from "./pages/EditCardPage";
 import DeleteCardPage from "./pages/DeleteCardPage";
+import DeckPage from "./pages/DeckPage";
 
 const AuthLayout = () => (
   <Container
@@ -59,6 +60,14 @@ function App() {
         element={
           <ProtectedRoute>
             <PackOpenedPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/decks"
+        element={
+          <ProtectedRoute>
+            <DeckPage />
           </ProtectedRoute>
         }
       />

@@ -1,18 +1,20 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import TopNavbar from "./TopNavbar";
-import BottomNavbar from "./BottomNavbar";
-import "../styles/AdminPage.css";
 import { GiFilmSpool } from "react-icons/gi";
+import "../styles/AdminPage.css";
 
 const AdminHomeContent = () => {
   const navigate = useNavigate();
 
   return (
-    <Container fluid className="admin-page-container text-light">
-      <Row className="justify-content-center align-items-center flex-grow-1 text-center">
-        <Col xs={12} md={8} lg={6}>
-          <div className="admin-grid-box">
+    <Container
+      fluid
+      className="admin-page-container text-light d-flex align-items-center justify-content-center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Container>
+        <Row className=" g-2 justify-content-center text-center">
+          <Col xs={5}>
             <div
               className="admin-grid-item"
               onClick={() => navigate("/admin/create")}
@@ -21,6 +23,8 @@ const AdminHomeContent = () => {
               <br />
               Card
             </div>
+          </Col>
+          <Col xs={5}>
             <div
               className="admin-grid-item"
               onClick={() => navigate("/admin/edit")}
@@ -29,6 +33,10 @@ const AdminHomeContent = () => {
               <br />
               Card
             </div>
+          </Col>
+        </Row>
+        <Row className="g-2 justify-content-center text-center">
+          <Col xs={5}>
             <div
               className="admin-grid-item"
               onClick={() => navigate("/admin/delete")}
@@ -37,13 +45,15 @@ const AdminHomeContent = () => {
               <br />
               Card
             </div>
-            <div className="admin-grid-item logo-cell">
-              <GiFilmSpool size={40} />
-              <span className="ms-2 navbar">FilmInPocket</span>
+          </Col>
+          <Col xs={5}>
+            <div className="admin-grid-item d-flex align-items-center justify-content-center gap-2">
+              <GiFilmSpool size={30} />
+              <span className="fw-bold">FilmInPocket</span>
             </div>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </Container>
     </Container>
   );
 };

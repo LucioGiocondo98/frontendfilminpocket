@@ -23,7 +23,7 @@ const BottomNavbar = () => {
             </Link>
           </Col>
           <Col xs={3} className="bottom-icon p-0">
-            <Link to="/mazzi" className="d-block py-2 nav-link-custom">
+            <Link to="/decks" className="d-block py-2 nav-link-custom">
               <MdOutlineCollectionsBookmark size={20} />
               <div className="nav-text">Mazzi</div>
             </Link>
