@@ -1,23 +1,30 @@
-import { Button, Container } from "react-bootstrap";
+// src/pages/WelcomePage.jsx
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/WelcomePage.css";
 
 export default function WelcomePage() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const handleClick = () => {
+      navigate("/login");
+    };
+    document.body.addEventListener("click", handleClick);
+
+    return () => {
+      document.body.removeEventListener("click", handleClick);
+    };
+  }, [navigate]);
+
   return (
-    <Container className="welcome-container d-flex flex-column justify-content-center align-items-center text-light">
-      <h1 className="mb-4">Benvenuto in FilmInPocket 🎬</h1>
-      <p className="mb-4 text-center">
-        Colleziona le tue star preferite. Scopri, gioca, vivi il cinema.
-      </p>
-      <Button
-        variant="warning"
-        className="rounded-pill px-4"
-        onClick={() => navigate("/login")}
-      >
-        Inizia
-      </Button>
-    </Container>
+    <div className="welcome-fullscreen">
+      <img
+        src="/welcome-logo.png"
+        alt="FilmInPocket Logo"
+        className="welcome-logo"
+      />
+      <p className="welcome-touch-text">Tocca ovunque per continuare</p>
+    </div>
   );
 }

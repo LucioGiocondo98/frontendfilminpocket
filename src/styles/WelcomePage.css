@@ -1,6 +1,51 @@
-.welcome-container {
+/* src/styles/WelcomePage.css */
+.welcome-fullscreen {
   height: 100vh;
-  background: linear-gradient(to bottom, #1c1c1c, #000000);
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.welcome-logo {
+  max-width: 90%;
+  height: auto;
+  object-fit: contain;
+  animation: fadeIn 1.5s ease-out;
+}
+
+.welcome-touch-text {
+  position: absolute;
+  bottom: 40px;
   font-family: 'Lobster', cursive;
-  text-align: center;
+  color: #ffd700;
+  font-size: 1.3rem;
+  text-shadow: 0 0 8px black;
+  opacity: 0.8;
+  animation: pulse 2s infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
 }
