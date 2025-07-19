@@ -1,0 +1,68 @@
+/* src/styles/PackOpeningAnimation.css */
+
+.ciak-animation-wrapper {
+  height: 100vh;
+  background: radial-gradient(circle, #111 0%, #000 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ciak-icon {
+  animation: ciak-bounce 2.5s ease-in-out;
+  transform-origin: center;
+  color: #ffc107;
+}
+
+@keyframes ciak-bounce {
+  0% {
+    transform: scale(0.8) rotate(-10deg);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.05) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.film-title {
+  margin-top: 20px;
+  font-size: 2.8rem;
+  font-family: 'Lobster', cursive;
+  color: #ffd700;
+  animation: fadeInText 1.5s ease-out 1.2s forwards;
+  opacity: 0;
+  text-shadow: 0 0 8px black;
+}
+.film-subtitle{
+    margin-top: 8px;
+    font-size: 1.8rem;
+     font-family: 'Lobster', cursive;
+  color: #ffd700;
+  animation: fadeInText 1.5s ease-out 1.2s forwards;
+  opacity: 0;
+  text-shadow: 0 0 8px black;
+}
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+  }
+}
+.film-title, .film-subtitle {
+  transform: translateY(20px);
+}
+
+@keyframes fadeInText {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

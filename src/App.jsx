@@ -14,6 +14,8 @@ import CreateCardPage from "./pages/CreateCardPage";
 import EditCardPage from "./pages/EditCardPage";
 import DeleteCardPage from "./pages/DeleteCardPage";
 import DeckPage from "./pages/DeckPage";
+import WelcomePage from "./pages/WelcomePage";
+import PackOpeningAnimation from "./components/PackOpeningAnimation";
 
 const AuthLayout = () => (
   <Container
@@ -27,7 +29,7 @@ const AuthLayout = () => (
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<AuthLayout />} />
+      <Route path="/" element={<WelcomePage />} />
       <Route path="/login" element={<AuthLayout />} />
 
       {/* Pagine protette */}
@@ -44,6 +46,14 @@ function App() {
         element={
           <ProtectedRoute>
             <CollectionPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/pack-opening"
+        element={
+          <ProtectedRoute>
+            <PackOpeningAnimation />
           </ProtectedRoute>
         }
       />

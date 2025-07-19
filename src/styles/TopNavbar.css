@@ -1,23 +1,4 @@
-/*.top-navbar {
-  background-color: #121212;
-  border-bottom: 1px solid #2a2a2a;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  z-index: 1030;
-}
 
-.top-navbar-brand {
-  font-family: 'Lobster', cursive;
-  color: #cccccc !important;
-  font-size: 1.6rem;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.top-navbar-brand:hover {
-  color: #ffffff !important;
-  text-shadow: 0 0 5px #ffc107;
-}
-*/
 .top-navbar {
   background-color: #121212;
   border-bottom: 1px solid #2a2a2a;

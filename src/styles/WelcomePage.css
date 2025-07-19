@@ -1,0 +1,6 @@
+.welcome-container {
+  height: 100vh;
+  background: linear-gradient(to bottom, #1c1c1c, #000000);
+  font-family: 'Lobster', cursive;
+  text-align: center;
+}

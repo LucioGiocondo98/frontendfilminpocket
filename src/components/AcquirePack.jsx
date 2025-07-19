@@ -66,7 +66,7 @@ export default function AcquirePack() {
       .then((data) => {
         console.log("Carte estratte:", data);
         setFilmTickets((prev) => prev - 1);
-        navigate("/pack-opened", { state: { cards: data } });
+        navigate("/pack-opening", { state: { cards: data } });
       })
       .catch((err) => console.error("Errore apertura pacco:", err));
   };
