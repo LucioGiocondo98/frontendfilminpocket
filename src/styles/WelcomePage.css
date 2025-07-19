@@ -27,8 +27,9 @@
   font-size: 1.3rem;
   text-shadow: 0 0 8px black;
   opacity: 0.8;
-  animation: pulse 2s infinite;
+  animation: pulseGlow 1.5s ease-in-out infinite;
 }
+
 
 @keyframes fadeIn {
   from {
@@ -41,11 +42,20 @@
   }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.8;
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.4;
+    transform: scale(1);
+    text-shadow: 0 0 6px #ffc107;
   }
   50% {
     opacity: 1;
+    transform: scale(1.05);
+    text-shadow: 0 0 12px #ffeb3b;
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+    text-shadow: 0 0 6px #ffc107;
   }
 }
