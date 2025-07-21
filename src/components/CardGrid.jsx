@@ -2,8 +2,14 @@ import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
+import "../styles/CardGrid.css";
 
-export default function CardGrid({ cards, selectedIds = [], onCardClick }) {
+export default function CardGrid({
+  cards,
+  selectedCards = [],
+  onCardClick,
+  mode,
+}) {
   if (!cards || cards.length === 0) {
     return (
       <p className="text-white text-center mt-4">
@@ -16,7 +22,8 @@ export default function CardGrid({ cards, selectedIds = [], onCardClick }) {
     <Row className="g-3" style={{ paddingBottom: "3rem" }}>
       {cards.map((card) => {
         const cardType = card.cardType?.toUpperCase();
-        const isSelected = selectedIds.includes(card.id);
+        const isSelected = selectedCards.includes(card.id);
+
         const cardContent =
           cardType === "MOVIE" ? (
             <MovieCard card={card} />
@@ -28,7 +35,9 @@ export default function CardGrid({ cards, selectedIds = [], onCardClick }) {
           <Col key={card.id} xs={6} xl={3}>
             {onCardClick ? (
               <div
-                className={`selectable-card ${isSelected ? "selected" : ""}`}
+                className={`selectable-card ${
+                  mode === "deck" && isSelected ? "selected" : ""
+                }`}
                 onClick={() => onCardClick(card.id)}
                 style={{ cursor: "pointer" }}
               >
