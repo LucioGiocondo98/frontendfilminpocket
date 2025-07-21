@@ -77,13 +77,13 @@ const DeckBuilder = () => {
       body: JSON.stringify(deckData),
     })
       .then((res) => {
-        if (!res.ok) throw new Error("Errore nel salvataggio del mazzo");
+        if (!res.ok) throw new Error("Errore nel salvataggio del deck");
         return res.json();
       })
       .then((data) => {
         setToast({
           show: true,
-          message: `Mazzo \"${data.name}\" ${
+          message: `Deck \"${data.name}\" ${
             editingDeck ? "modificato" : "creato"
           } con successo!`,
           variant: "success",
@@ -97,7 +97,7 @@ const DeckBuilder = () => {
         console.error("Errore salvataggio mazzo:", err);
         setToast({
           show: true,
-          message: "Errore durante il salvataggio del mazzo.",
+          message: "Errore durante il salvataggio del deck.",
           variant: "danger",
         });
       });
@@ -113,7 +113,7 @@ const DeckBuilder = () => {
         setUserDecks((prev) => prev.filter((d) => d.id !== deckId));
         setToast({
           show: true,
-          message: "Mazzo eliminato con successo!",
+          message: "Deck eliminato con successo!",
           variant: "success",
         });
       })
@@ -121,7 +121,7 @@ const DeckBuilder = () => {
         console.error("Errore eliminazione:", err);
         setToast({
           show: true,
-          message: "Errore durante l'eliminazione del mazzo.",
+          message: "Errore durante l'eliminazione del deck.",
           variant: "danger",
         });
       });
@@ -135,12 +135,12 @@ const DeckBuilder = () => {
             <>
               <h4 className="mb-3 text-warning">
                 {editingDeck
-                  ? `Modifica mazzo: "${deckName}"`
-                  : "Crea un nuovo mazzo"}
+                  ? `Modifica deck: "${deckName}"`
+                  : "Crea un nuovo deck"}
               </h4>
               <Form.Control
                 className="mb-3"
-                placeholder="Nome del mazzo"
+                placeholder="Nome del deck"
                 value={deckName}
                 onChange={(e) => setDeckName(e.target.value)}
               />
@@ -149,11 +149,9 @@ const DeckBuilder = () => {
                 className="mb-4"
                 onClick={handleSaveDeck}
               >
-                Salva {editingDeck ? "Modifiche" : "Mazzo"}
+                Salva {editingDeck ? "Modifiche" : "Deck"}
               </Button>
-              <h5 className="mb-3">
-                Seleziona card dal tuo deck da aggiungere
-              </h5>
+              <h5 className="mb-3">Seleziona card da aggiungere al deck</h5>
             </>
           )}
 
@@ -192,7 +190,7 @@ const DeckBuilder = () => {
 
           {mode === "edit" && !editingDeck && (
             <>
-              <h4 className="mb-3">Seleziona un mazzo da modificare</h4>
+              <h4 className="mb-3">Seleziona deck da modificare</h4>
               {userDecks.map((deck) => (
                 <div
                   key={deck.id}

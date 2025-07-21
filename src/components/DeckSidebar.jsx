@@ -40,7 +40,7 @@ const DeckSidebar = ({
   return (
     <Stack gap={3} className="pt-4">
       <Button
-        variant="outline-light"
+        variant="outline-light bg-dark"
         className="rounded-pill py-3"
         onClick={() => {
           resetUI();
@@ -52,7 +52,7 @@ const DeckSidebar = ({
       </Button>
 
       <Button
-        variant="outline-light"
+        variant="outline-light bg-dark"
         className="rounded-pill py-3"
         onClick={() => {
           resetUI();
@@ -64,7 +64,7 @@ const DeckSidebar = ({
       </Button>
 
       <Button
-        variant="outline-light"
+        variant="outline-light bg-dark"
         className="rounded-pill py-3"
         onClick={() => {
           resetUI();
@@ -75,7 +75,7 @@ const DeckSidebar = ({
       </Button>
 
       <Button
-        variant="outline-light"
+        variant="outline-light bg-dark"
         className="rounded-pill py-3"
         onClick={() => {
           resetUI();
