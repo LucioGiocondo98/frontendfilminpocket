@@ -33,7 +33,7 @@ export default function PackOpenedPage() {
               className="text-center mb-4"
               style={{
                 fontFamily: "Lobster, cursive",
-                color: "orange",
+                color: "#F0C420",
                 fontSize: "2.5rem",
               }}
             >
