@@ -1,12 +1,6 @@
+// DeckBuilder.jsx
 import { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Form,
-  Spinner,
-} from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import DeckSidebar from "../components/DeckSidebar";
 import DeckCardGrid from "../components/DeckCardGrid";
@@ -89,7 +83,9 @@ const DeckBuilder = () => {
       .then((data) => {
         setToast({
           show: true,
-          message: `Mazzo \"${data.name}\" ${editingDeck ? "modificato" : "creato"} con successo!`,
+          message: `Mazzo \"${data.name}\" ${
+            editingDeck ? "modificato" : "creato"
+          } con successo!`,
           variant: "success",
         });
         setDeckName("");
@@ -135,13 +131,13 @@ const DeckBuilder = () => {
     <Container fluid className="text-light mt-4">
       <Row>
         <Col md={4}>
-          {($1 || (mode === "edit" && editingDeck)) && (
+          {(mode === "create" || (mode === "edit" && editingDeck)) && (
             <>
-              {editingDeck ? (
-              <h4 className="mb-3 text-warning">Modifica mazzo: "{deckName}"</h4>
-            ) : (
-              <h4 className="mb-3">Crea un nuovo mazzo</h4>
-            )}
+              <h4 className="mb-3 text-warning">
+                {editingDeck
+                  ? `Modifica mazzo: "${deckName}"`
+                  : "Crea un nuovo mazzo"}
+              </h4>
               <Form.Control
                 className="mb-3"
                 placeholder="Nome del mazzo"
@@ -153,26 +149,15 @@ const DeckBuilder = () => {
                 className="mb-4"
                 onClick={handleSaveDeck}
               >
-                Salva Mazzo
+                Salva {editingDeck ? "Modifiche" : "Mazzo"}
               </Button>
+              <h5 className="mb-3">
+                Seleziona card dal tuo deck da aggiungere
+              </h5>
             </>
           )}
-          <>
-            <h4 className="mb-3">Seleziona card dal tuo deck da aggiungere</h4>
-            <Form.Control
-              className="mb-3"
-              placeholder="Nome del mazzo"
-              value={deckName}
-              onChange={(e) => setDeckName(e.target.value)}
-            />
-            <Button
-              variant="success"
-              className="mb-4"
-              onClick={handleSaveDeck}
-            >
-              Salva {editingDeck ? "Modifiche" : "Mazzo"}
-            </Button>
-            <DeckSidebar
+
+          <DeckSidebar
             accessToken={accessToken}
             setMode={setMode}
             setCards={setCards}
@@ -266,7 +251,10 @@ const DeckBuilder = () => {
                 <div
                   key={deck.id}
                   className="mb-3 p-3 rounded d-flex justify-content-between align-items-center"
-                  style={{ backgroundColor: "#1f1f1f", border: "1px solid #444" }}
+                  style={{
+                    backgroundColor: "#1f1f1f",
+                    border: "1px solid #444",
+                  }}
                 >
                   <div>
                     <h5 className="text-warning mb-1">{deck.name}</h5>
