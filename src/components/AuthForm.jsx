@@ -56,11 +56,7 @@ const AuthForm = () => {
         login(data.accessToken, data.user);
         showToast("Login effettuato con successo!", "success");
 
-        if (data.user.role === "ROLE_ADMIN") {
-          navigate("/admin");
-        } else {
-          navigate("/home");
-        }
+        navigate("/home");
       })
       .catch((err) => {
         setError(err.message);

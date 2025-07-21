@@ -13,10 +13,22 @@
 }
 
 .welcome-logo {
-  max-width: 90%;
+  max-width: 80%;
   height: auto;
   object-fit: contain;
-  animation: fadeIn 1.5s ease-out;
+  animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .welcome-touch-text {

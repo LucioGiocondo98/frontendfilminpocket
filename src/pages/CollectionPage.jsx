@@ -24,7 +24,7 @@ export default function CollectionPage() {
 
     const endpoint =
       user.role === "ROLE_ADMIN"
-        ? `http://localhost:8080/admin/cards?${params.toString()}`
+        ? `http://localhost:8080/admin/filtered/cards?${params.toString()}`
         : `http://localhost:8080/cards/collection?${params.toString()}`;
 
     fetch(endpoint, {
@@ -45,18 +45,20 @@ export default function CollectionPage() {
   }, [filters, accessToken, user]);
 
   return (
-    <Container fluid>
+    <div className="d-flex flex-column min-vh-100 text-light">
       <TopNavbar />
-      {/*devo aggiungere un paddding bottom 4rem da qualche parte*/}
-      <Row className="pt-5 pb-5">
-        <Col xs={12} md={3} lg={2} className="mb-3">
-          <SidebarFiltri onFilterChange={setFilters} />
-        </Col>
-        <Col xs={12} md={9} lg={10}>
-          <CardGrid cards={cards} />
-        </Col>
-      </Row>
-      <BottomNavbar />
-    </Container>
+      <Container fluid>
+        {/*devo aggiungere un paddding bottom 4rem da qualche parte*/}
+        <Row className="pt-5" style={{ paddingBottom: "4rem" }}>
+          <Col xs={12} md={3} lg={2} className="mb-3">
+            <SidebarFiltri onFilterChange={setFilters} />
+          </Col>
+          <Col xs={12} md={9} lg={10}>
+            <CardGrid cards={cards} />
+          </Col>
+        </Row>
+        <BottomNavbar />
+      </Container>
+    </div>
   );
 }

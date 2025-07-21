@@ -7,10 +7,10 @@ import DeckSidebar from "../components/DeckSidebar";
 import DeckBuilder from "../components/DeckBuilder";
 
 const DeckPage = () => {
-  const [mode, setMode] = useState(null); // "create" | "edit" | "delete"
+  const [mode, setMode] = useState(null);
 
   return (
-    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
+    <div className="d-flex flex-column min-vh-100 text-light">
       <TopNavbar />
       <Container
         fluid

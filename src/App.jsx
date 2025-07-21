@@ -82,14 +82,6 @@ function App() {
         }
       />
       <Route
-        path="/admin"
-        element={
-          <AdminRoute>
-            <AdminPage />
-          </AdminRoute>
-        }
-      />
-      <Route
         path="/admin/create"
         element={
           <AdminRoute>

@@ -30,3 +30,14 @@
  
   box-shadow: 0 0 15px #454541;
 }
+.pack-container {
+  font-size: 5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: inline-block;
+}
+
+.pack-container:hover {
+  transform: scale(1.1) rotate(-5deg);
+  color: #ffc107;
+}

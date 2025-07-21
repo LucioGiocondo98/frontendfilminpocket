@@ -5,9 +5,10 @@ function CardPreview({ cardType, formData, imageFile }) {
   const previewCard = {
     ...formData,
     cardType,
-    imageUrl: imageFile ? URL.createObjectURL(imageFile) : null,
+    imageUrl: imageFile
+      ? URL.createObjectURL(imageFile)
+      : formData.imageUrl || null,
   };
-
   return (
     <div className="d-flex align-items-center justify-content-center">
       {cardType === "MOVIE" ? (

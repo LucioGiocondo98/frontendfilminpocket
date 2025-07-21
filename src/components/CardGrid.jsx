@@ -13,7 +13,7 @@ export default function CardGrid({ cards, selectedIds = [], onCardClick }) {
   }
 
   return (
-    <Row className="g-3">
+    <Row className="g-3" style={{ paddingBottom: "3rem" }}>
       {cards.map((card) => {
         const cardType = card.cardType?.toUpperCase();
         const isSelected = selectedIds.includes(card.id);
@@ -25,7 +25,7 @@ export default function CardGrid({ cards, selectedIds = [], onCardClick }) {
           );
 
         return (
-          <Col key={card.id} xs={6} sm={6} md={6} lg={4} xl={3}>
+          <Col key={card.id} xs={6} xl={3}>
             {onCardClick ? (
               <div
                 className={`selectable-card ${isSelected ? "selected" : ""}`}

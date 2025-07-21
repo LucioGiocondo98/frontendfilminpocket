@@ -19,11 +19,7 @@ export default function WelcomePage() {
 
   return (
     <div className="welcome-fullscreen">
-      <img
-        src="/welcome-logo.png"
-        alt="FilmInPocket Logo"
-        className="welcome-logo"
-      />
+      <img src="/Logo.png" alt="FilmInPocket Logo" className="welcome-logo" />
       <p className="welcome-touch-text">Tocca ovunque per continuare</p>
     </div>
   );

@@ -51,7 +51,7 @@ export default function CardDetailsPage() {
   }
 
   return (
-    <div className="bg-dark min-vh-100 text-white d-flex flex-column">
+    <div className="min-vh-100 text-white d-flex flex-column">
       <TopNavbar />
 
       <Container className="flex-grow-1 pt-5 mt-3 vh-80">

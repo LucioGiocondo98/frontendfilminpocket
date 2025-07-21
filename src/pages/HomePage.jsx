@@ -10,18 +10,16 @@ const HomePage = () => {
   const { user } = useAuth();
 
   return (
-    <Container fluid className="mt-0">
-      <Row>
-        <Col>
-          <TopNavbar />
-        </Col>
-      </Row>
-
-      {/* Contenuto principale: AdminHomeContent o MainContent */}
-      {user?.role === "ROLE_ADMIN" ? <AdminHomeContent /> : <MainContent />}
-
+    <div className="d-flex flex-column min-vh-100  text-light">
+      <TopNavbar />
+      <Container>
+        <Row>
+          <Col></Col>
+        </Row>
+        {user?.role === "ROLE_ADMIN" ? <AdminHomeContent /> : <MainContent />}
+      </Container>
       <BottomNavbar />
-    </Container>
+    </div>
   );
 };
 

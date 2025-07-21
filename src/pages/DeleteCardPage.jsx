@@ -66,7 +66,7 @@ const DeleteCardPage = () => {
   };
 
   return (
-    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
+    <div className="d-flex flex-column min-vh-100 text-light">
       <TopNavbar />
       <Container
         fluid
@@ -74,7 +74,7 @@ const DeleteCardPage = () => {
         style={{ padding: "2rem 1rem 100px" }}
       >
         <Row>
-          <Col xs={5}>
+          <Col xs={12} md={5}>
             <Form
               className="mb-3"
               onSubmit={(e) => {
@@ -104,14 +104,14 @@ const DeleteCardPage = () => {
           </Col>
 
           <Col
-            xs={5}
-            className="d-flex align-items-center justify-content-center"
+            xs={12}
+            className="d-flex align-items-center justify-content-center mt-3"
           >
             {cardToDelete && (
               <CardPreview
                 cardType={cardToDelete.cardType}
                 formData={cardToDelete}
-                imageFile={null}
+                imageFile={cardToDelete.imageFile}
               />
             )}
           </Col>

@@ -119,7 +119,7 @@ const EditCardPage = () => {
   };
 
   return (
-    <div className="d-flex flex-column min-vh-100 bg-dark text-light">
+    <div className="d-flex flex-column min-vh-100 text-light">
       <TopNavbar />
       <Container
         fluid

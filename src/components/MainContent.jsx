@@ -5,7 +5,7 @@ import "../styles/HomePage.css";
 const MainContent = () => {
   return (
     <Container className="text-center py-4">
-      <Row className="justify-content-center mb-3">
+      <Row className="justify-content-center mb-3 px-0">
         <Col xs={12}>
           <AcquirePack />
         </Col>
