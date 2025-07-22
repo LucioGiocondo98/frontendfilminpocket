@@ -16,6 +16,7 @@ import DeleteCardPage from "./pages/DeleteCardPage";
 import DeckPage from "./pages/DeckPage";
 import WelcomePage from "./pages/WelcomePage";
 import PackOpeningAnimation from "./components/PackOpeningAnimation";
+import ProfilePage from "./pages/ProfilePage";
 
 const AuthLayout = () => (
   <Container
@@ -78,6 +79,14 @@ function App() {
         element={
           <ProtectedRoute>
             <DeckPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profilo"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         }
       />

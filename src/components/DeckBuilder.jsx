@@ -1,9 +1,8 @@
-// DeckBuilder.jsx
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Form, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import DeckSidebar from "../components/DeckSidebar";
-import DeckCardGrid from "../components/DeckCardGrid";
+import DeckDetailsModal from "../components/DeckDetailsModal";
 import ToastMessage from "../components/ToastMessage";
 
 const DeckBuilder = () => {
@@ -16,10 +15,9 @@ const DeckBuilder = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [userDecks, setUserDecks] = useState([]);
-  const [selectedDeck, setSelectedDeck] = useState(null);
   const [editingDeck, setEditingDeck] = useState(null);
   const [userCollection, setUserCollection] = useState([]);
-
+  const [modalDeck, setModalDeck] = useState(null);
   const [toast, setToast] = useState({
     show: false,
     message: "",
@@ -27,7 +25,7 @@ const DeckBuilder = () => {
   });
 
   useEffect(() => {
-    if (mode === "edit" || mode === "view" || mode === "delete") {
+    if (["edit", "view", "delete"].includes(mode)) {
       fetch("http://localhost:8080/decks", {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
@@ -49,20 +47,10 @@ const DeckBuilder = () => {
   };
 
   const handleSaveDeck = () => {
-    if (!deckName.trim()) {
-      alert("Inserisci un nome per il mazzo.");
-      return;
-    }
-    if (selectedCards.length === 0) {
-      alert("Seleziona almeno una carta.");
-      return;
-    }
+    if (!deckName.trim()) return alert("Inserisci un nome per il mazzo.");
+    if (selectedCards.length === 0) return alert("Seleziona almeno una carta.");
 
-    const deckData = {
-      name: deckName,
-      cardIds: selectedCards,
-    };
-
+    const deckData = { name: deckName, cardIds: selectedCards };
     const method = editingDeck ? "PUT" : "POST";
     const endpoint = editingDeck
       ? `http://localhost:8080/decks/${editingDeck.id}`
@@ -131,30 +119,6 @@ const DeckBuilder = () => {
     <Container fluid className="text-light mt-4">
       <Row>
         <Col md={4}>
-          {(mode === "create" || (mode === "edit" && editingDeck)) && (
-            <>
-              <h4 className="mb-3 text-warning">
-                {editingDeck
-                  ? `Modifica deck: "${deckName}"`
-                  : "Crea un nuovo deck"}
-              </h4>
-              <Form.Control
-                className="mb-3"
-                placeholder="Nome del deck"
-                value={deckName}
-                onChange={(e) => setDeckName(e.target.value)}
-              />
-              <Button
-                variant="success"
-                className="mb-4"
-                onClick={handleSaveDeck}
-              >
-                Salva {editingDeck ? "Modifiche" : "Deck"}
-              </Button>
-              <h5 className="mb-3">Seleziona card da aggiungere al deck</h5>
-            </>
-          )}
-
           <DeckSidebar
             accessToken={accessToken}
             setMode={setMode}
@@ -165,9 +129,9 @@ const DeckBuilder = () => {
             resetUI={() => {
               setDeckName("");
               setSelectedCards([]);
-              setSelectedDeck(null);
               setEditingDeck(null);
               setError("");
+              setModalDeck(null);
             }}
           />
         </Col>
@@ -180,12 +144,27 @@ const DeckBuilder = () => {
             onClose={() => setToast({ ...toast, show: false })}
           />
 
-          {(mode === "create" || (mode === "edit" && editingDeck)) && (
-            <DeckCardGrid
-              cards={mode === "edit" ? userCollection : cards}
-              selectedCardIds={selectedCards}
-              onCardClick={handleCardClick}
-            />
+          {mode === "view" && (
+            <>
+              <h4 className="mb-3">I miei Deck</h4>
+              {userDecks.map((deck) => (
+                <div
+                  key={deck.id}
+                  className="mb-3 p-3 rounded"
+                  style={{
+                    backgroundColor: "#1f1f1f",
+                    border: "1px solid #444",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setModalDeck({ ...deck, editable: false })}
+                >
+                  <h5 className="text-warning mb-1">{deck.name}</h5>
+                  <p className="text-light mb-2">
+                    Carte contenute: {deck.cards.length}
+                  </p>
+                </div>
+              ))}
+            </>
           )}
 
           {mode === "edit" && !editingDeck && (
@@ -210,27 +189,6 @@ const DeckBuilder = () => {
                       .then((res) => res.json())
                       .then((data) => setUserCollection(data.content || data))
                       .catch(console.error);
-                  }}
-                >
-                  <h5 className="text-warning mb-1">{deck.name}</h5>
-                  <p className="text-light mb-2">
-                    Carte contenute: {deck.cards.length}
-                  </p>
-                </div>
-              ))}
-            </>
-          )}
-
-          {mode === "view" && (
-            <>
-              <h4 className="mb-3">I miei Deck</h4>
-              {userDecks.map((deck) => (
-                <div
-                  key={deck.id}
-                  className="mb-3 p-3 rounded"
-                  style={{
-                    backgroundColor: "#1f1f1f",
-                    border: "1px solid #444",
                   }}
                 >
                   <h5 className="text-warning mb-1">{deck.name}</h5>
@@ -269,6 +227,36 @@ const DeckBuilder = () => {
                 </div>
               ))}
             </>
+          )}
+
+          {(mode === "create" || (mode === "edit" && editingDeck)) && (
+            <DeckDetailsModal
+              show={true}
+              onHide={() => {
+                setEditingDeck(null);
+                setDeckName("");
+                setSelectedCards([]);
+              }}
+              deck={{
+                name: deckName,
+                cards: mode === "edit" ? userCollection : cards,
+              }}
+              editable={true}
+              selectedCardIds={selectedCards}
+              onCardToggle={handleCardClick}
+              onSaveDeck={handleSaveDeck}
+              isEditMode={!!editingDeck}
+              onDeckNameChange={setDeckName}
+            />
+          )}
+
+          {modalDeck && !modalDeck.editable && (
+            <DeckDetailsModal
+              show={true}
+              onHide={() => setModalDeck(null)}
+              deck={modalDeck}
+              editable={false}
+            />
           )}
 
           {mode === null && (
