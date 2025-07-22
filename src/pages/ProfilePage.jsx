@@ -127,7 +127,7 @@ const ProfilePage = () => {
                     borderRadius: "50%",
                     alignSelf: "center",
                   }}
-                  className="mx-auto my-3"
+                  className="mx-auto my-3 border border-2 border-secondary"
                 />
               )}
               <Card.Body>
