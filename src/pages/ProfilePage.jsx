@@ -111,7 +111,11 @@ const ProfilePage = () => {
         />
         <Row className="justify-content-center align-items-center pb-5">
           <Col xs={8} className="text-center">
-            <Card bg="dark" text="light" className="p-3">
+            <Card
+              bg="dark"
+              text="light"
+              className="p-3 border border-3 border-light"
+            >
               {previewUrl && (
                 <Card.Img
                   variant="top"
