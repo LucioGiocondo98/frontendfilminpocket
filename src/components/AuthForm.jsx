@@ -4,6 +4,7 @@ import "../styles/AuthForm.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ToastMessage from "./ToastMessage";
+import API_URL from "../apiConfig";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -20,7 +21,6 @@ const AuthForm = () => {
     variant: "success",
   });
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
   const showToast = (message, variant = "success") => {
     setToast({ show: true, message, variant });
   };
