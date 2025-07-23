@@ -257,7 +257,7 @@ const DeckBuilder = () => {
 
           {mode === null && (
             <div className="text-center mt-5 text-warning">
-              <p>Seleziona un'opzione dal menu.</p>
+              <h3>Seleziona un'opzione dal menu.</h3>
             </div>
           )}
         </Col>
