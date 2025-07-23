@@ -1,7 +1,7 @@
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
 
-function CardPreview({ cardType, formData, imageFile }) {
+const CardPreview = function ({ cardType, formData, imageFile }) {
   const previewCard = {
     ...formData,
     cardType,
@@ -9,15 +9,18 @@ function CardPreview({ cardType, formData, imageFile }) {
       ? URL.createObjectURL(imageFile)
       : formData.imageUrl || null,
   };
+
+  const type = cardType?.toUpperCase();
+
   return (
     <div className="d-flex align-items-center justify-content-center">
-      {cardType === "MOVIE" ? (
+      {type === "MOVIE" ? (
         <MovieCard card={previewCard} />
       ) : (
         <PersonCard card={previewCard} />
       )}
     </div>
   );
-}
+};
 
 export default CardPreview;

@@ -1,4 +1,3 @@
-// EditCardPage.jsx
 import { useState } from "react";
 import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import TopNavbar from "../components/TopNavbar";
@@ -33,7 +32,10 @@ const EditCardPage = () => {
         return res.json();
       })
       .then((data) => {
-        setFormCard(data);
+        setFormCard({
+          ...data,
+          imageUrl: data.imageUrl || "",
+        });
         setCardType(data.cardType);
         setFilmographyInput((data.filmography || []).join(", "));
       })
@@ -71,13 +73,21 @@ const EditCardPage = () => {
     e.preventDefault();
     if (!formCard || !inputId) return;
 
+    const updatedCard = {
+      ...formCard,
+      cardType,
+      imageUrl: formCard.imageUrl || "",
+    };
+
+    console.log("Dati da salvare:", updatedCard);
+
     fetch(`http://localhost:8080/cards/${inputId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...formCard, cardType }),
+      body: JSON.stringify(updatedCard),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Errore aggiornamento card");
@@ -126,7 +136,7 @@ const EditCardPage = () => {
         className="flex-grow-1"
         style={{ padding: "2rem 1rem 100px" }}
       >
-        <Row>
+        <Row className="py-5">
           <Col md={5}>
             <Form
               onSubmit={(e) => {
@@ -144,7 +154,7 @@ const EditCardPage = () => {
                   onChange={(e) => setInputId(e.target.value)}
                 />
               </Form.Group>
-              <Button type="submit" variant="info" className="mt-2">
+              <Button type="submit" variant="warning" className="mt-2">
                 Carica Card
               </Button>
             </Form>
@@ -161,6 +171,7 @@ const EditCardPage = () => {
                 <ImageUpload
                   imageFile={imageFile}
                   onImageChange={handleImageChange}
+                  currentImageUrl={formCard.imageUrl}
                 />
                 <Button type="submit" variant="warning" className="mt-2">
                   {uploading ? (

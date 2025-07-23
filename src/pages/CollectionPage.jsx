@@ -47,9 +47,8 @@ export default function CollectionPage() {
   return (
     <div className="d-flex flex-column min-vh-100 text-light">
       <TopNavbar />
-      <Container fluid>
-        {/*devo aggiungere un paddding bottom 4rem da qualche parte*/}
-        <Row className="pt-5" style={{ paddingBottom: "4rem" }}>
+      <Container fluid className="my-5 pt-4">
+        <Row className="pt-5">
           <Col xs={12} md={3} lg={2} className="mb-3">
             <SidebarFiltri onFilterChange={setFilters} />
           </Col>

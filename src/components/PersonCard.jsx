@@ -1,5 +1,6 @@
 import { Card } from "react-bootstrap";
 import pellicola from "../assets/pellicola.jpg";
+import "../styles/Card.css";
 
 export default function PersonCard({ card }) {
   const getBorderStyle = (rarity) => {
@@ -27,6 +28,7 @@ export default function PersonCard({ card }) {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backdropFilter: "blur(2px)",
+        position: "relative",
       }}
     >
       {card.imageUrl && (
@@ -80,6 +82,9 @@ export default function PersonCard({ card }) {
           </li>
         </ul>
       </Card.Body>
+      <div className={`card-rarity-badge ${card.rarity.toLowerCase()}`}>
+        {card.rarity}
+      </div>
     </Card>
   );
 }

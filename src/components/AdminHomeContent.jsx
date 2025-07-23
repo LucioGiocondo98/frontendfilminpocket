@@ -14,7 +14,7 @@ const AdminHomeContent = () => {
     >
       <Container>
         <Row className=" g-2 justify-content-center text-center">
-          <Col xs={5}>
+          <Col xs={6}>
             <div
               className="admin-grid-item"
               onClick={() => navigate("/admin/create")}
@@ -24,7 +24,7 @@ const AdminHomeContent = () => {
               Card
             </div>
           </Col>
-          <Col xs={5}>
+          <Col xs={6}>
             <div
               className="admin-grid-item"
               onClick={() => navigate("/admin/edit")}
@@ -36,7 +36,7 @@ const AdminHomeContent = () => {
           </Col>
         </Row>
         <Row className="g-2 justify-content-center text-center">
-          <Col xs={5}>
+          <Col xs={6}>
             <div
               className="admin-grid-item"
               onClick={() => navigate("/admin/delete")}
@@ -46,7 +46,7 @@ const AdminHomeContent = () => {
               Card
             </div>
           </Col>
-          <Col xs={5}>
+          <Col xs={6}>
             <div className="admin-grid-item d-flex align-items-center justify-content-center gap-2">
               <GiFilmSpool size={30} />
               <span className="fw-bold">FilmInPocket</span>

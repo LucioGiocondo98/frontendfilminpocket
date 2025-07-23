@@ -71,14 +71,12 @@ const DeckBuilder = () => {
       .then((data) => {
         setToast({
           show: true,
-          message: `Deck \"${data.name}\" ${
+          message: `Deck "${data.name}" ${
             editingDeck ? "modificato" : "creato"
           } con successo!`,
           variant: "success",
         });
-        setDeckName("");
-        setSelectedCards([]);
-        setEditingDeck(null);
+        handleCloseModal();
         setMode("view");
       })
       .catch((err) => {
@@ -115,9 +113,17 @@ const DeckBuilder = () => {
       });
   };
 
+  const handleCloseModal = () => {
+    setEditingDeck(null);
+    setDeckName("");
+    setSelectedCards([]);
+    setModalDeck(null);
+    setMode(null);
+  };
+
   return (
     <Container fluid className="text-light mt-4">
-      <Row>
+      <Row className="py-3">
         <Col md={4}>
           <DeckSidebar
             accessToken={accessToken}
@@ -126,13 +132,7 @@ const DeckBuilder = () => {
             setUserDecks={setUserDecks}
             setLoading={setLoading}
             setError={setError}
-            resetUI={() => {
-              setDeckName("");
-              setSelectedCards([]);
-              setEditingDeck(null);
-              setError("");
-              setModalDeck(null);
-            }}
+            resetUI={handleCloseModal}
           />
         </Col>
 
@@ -232,11 +232,7 @@ const DeckBuilder = () => {
           {(mode === "create" || (mode === "edit" && editingDeck)) && (
             <DeckDetailsModal
               show={true}
-              onHide={() => {
-                setEditingDeck(null);
-                setDeckName("");
-                setSelectedCards([]);
-              }}
+              onHide={handleCloseModal}
               deck={{
                 name: deckName,
                 cards: mode === "edit" ? userCollection : cards,
@@ -253,15 +249,15 @@ const DeckBuilder = () => {
           {modalDeck && !modalDeck.editable && (
             <DeckDetailsModal
               show={true}
-              onHide={() => setModalDeck(null)}
+              onHide={handleCloseModal}
               deck={modalDeck}
               editable={false}
             />
           )}
 
           {mode === null && (
-            <div className="text-center mt-5 text-secondary">
-              <p>Seleziona un'opzione dal menu a sinistra.</p>
+            <div className="text-center mt-5 text-warning">
+              <p>Seleziona un'opzione dal menu.</p>
             </div>
           )}
         </Col>

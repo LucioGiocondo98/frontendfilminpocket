@@ -4,6 +4,7 @@ import { Container, Row, Col, Spinner, Card } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
+import "../styles/Card.css";
 
 export default function CardDetailsPage() {
   const { id } = useParams();
@@ -51,52 +52,43 @@ export default function CardDetailsPage() {
   }
 
   return (
-    <div className="min-vh-100 text-white d-flex flex-column">
+    <div className="min-vh-100 text-white d-flex flex-column pb-3">
       <TopNavbar />
 
-      <Container className="flex-grow-1 pt-5 mt-3 vh-80">
-        <Row className="justify-content-center align-items-stretch g-4 h-100">
-          {/* Colonna immagine */}
-          <Col xs={10} md={4} className="h-100 d-flex flex-column">
+      <Container className="flex-grow-1 pt-3 mt-3 vh-80 pb-5">
+        <Row className="justify-content-center">
+          <Col xs={12} md={8}>
             <Card
-              className="overflow-hidden h-100 d-flex flex-column"
-              style={{ borderRadius: "20px" }}
-            >
-              <Card.Img
-                src={card.imageUrl}
-                alt={card.name}
-                onClick={() => setIsFullscreen(!isFullscreen)}
-                style={{
-                  width: isFullscreen ? "85vw" : "100%",
-                  height: isFullscreen ? "85vh" : "100%",
-                  minHeight: "300px",
-                  objectFit: "contain",
-                  backgroundColor: "black",
-                  borderRadius: isFullscreen ? "12px" : "20px",
-                  padding: isFullscreen ? "10px" : "10px",
-                  position: isFullscreen ? "fixed" : "static",
-                  top: isFullscreen ? "50%" : "auto",
-                  left: isFullscreen ? "50%" : "auto",
-                  transform: isFullscreen ? "translate(-50%, -50%)" : "none",
-                  zIndex: isFullscreen ? 9999 : "auto",
-                  cursor: "pointer",
-                }}
-              />
-            </Card>
-          </Col>
-
-          {/* Colonna dettagli */}
-          <Col xs={10} md={8} className="h-100 d-flex flex-column">
-            <Card
-              className="flex-grow-1"
               style={{
+                borderRadius: "20px",
                 backgroundColor: "#1a1a1a",
                 color: "black",
-                borderRadius: "12px",
                 fontFamily: "'Lobster', cursive",
                 border: getBorderStyle(card.rarity),
               }}
             >
+              {card.imageUrl && (
+                <Card.Img
+                  src={card.imageUrl}
+                  alt={card.name}
+                  onClick={() => setIsFullscreen(!isFullscreen)}
+                  style={{
+                    width: isFullscreen ? "85vw" : "100%",
+                    height: isFullscreen ? "85vh" : "auto",
+                    objectFit: "contain",
+                    backgroundColor: "black",
+                    borderRadius: isFullscreen ? "12px" : "20px",
+                    padding: isFullscreen ? "10px" : "0",
+                    position: isFullscreen ? "fixed" : "static",
+                    top: isFullscreen ? "50%" : "auto",
+                    left: isFullscreen ? "50%" : "auto",
+                    transform: isFullscreen ? "translate(-50%, -50%)" : "none",
+                    zIndex: isFullscreen ? 9999 : "auto",
+                    cursor: "pointer",
+                  }}
+                />
+              )}
+
               <Card.Body>
                 <Card.Title
                   className="text-center mb-4"
@@ -115,8 +107,9 @@ export default function CardDetailsPage() {
                 <ul
                   style={{
                     listStyleType: "none",
-                    padding: 5,
+                    padding: "1rem",
                     backgroundColor: "white",
+                    borderRadius: "8px",
                   }}
                 >
                   <li>
@@ -163,6 +156,9 @@ export default function CardDetailsPage() {
                   )}
                 </ul>
               </Card.Body>
+              <div className={`card-rarity-badge ${card.rarity.toLowerCase()}`}>
+                {card.rarity}
+              </div>
             </Card>
           </Col>
         </Row>

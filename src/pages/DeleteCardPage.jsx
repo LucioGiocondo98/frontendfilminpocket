@@ -73,7 +73,7 @@ const DeleteCardPage = () => {
         className="flex-grow-1"
         style={{ padding: "2rem 1rem 100px" }}
       >
-        <Row>
+        <Row className="py-5">
           <Col xs={12} md={5}>
             <Form
               className="mb-3"
@@ -91,7 +91,7 @@ const DeleteCardPage = () => {
                   onChange={(e) => setInputId(e.target.value)}
                 />
               </Form.Group>
-              <Button type="submit" variant="info" className="mt-2">
+              <Button type="submit" variant="warning" className="mt-2">
                 Carica Card
               </Button>
             </Form>

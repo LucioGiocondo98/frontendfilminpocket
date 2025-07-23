@@ -4,12 +4,7 @@ import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
 import "../styles/CardGrid.css";
 
-export default function CardGrid({
-  cards,
-  selectedCards = [],
-  onCardClick,
-  mode,
-}) {
+const CardGrid = function ({ cards, selectedCards = [], onCardClick, mode }) {
   if (!cards || cards.length === 0) {
     return (
       <p className="text-white text-center mt-4">
@@ -32,7 +27,7 @@ export default function CardGrid({
           );
 
         return (
-          <Col key={card.id} xs={6} xl={3}>
+          <Col key={card.id} xs={6} xl={4}>
             {onCardClick ? (
               <div
                 className={`selectable-card ${
@@ -53,4 +48,5 @@ export default function CardGrid({
       })}
     </Row>
   );
-}
+};
+export default CardGrid;

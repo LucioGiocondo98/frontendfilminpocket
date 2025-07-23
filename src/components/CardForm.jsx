@@ -8,7 +8,9 @@ function CardForm({
   onFilmographyChange,
 }) {
   const renderTypeSpecificFields = () => {
-    switch (cardType) {
+    const normalizedType = cardType?.toUpperCase();
+
+    switch (normalizedType) {
       case "MOVIE":
         return (
           <>

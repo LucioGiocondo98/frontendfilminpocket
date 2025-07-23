@@ -17,12 +17,16 @@ export default function TopNavbar() {
   };
 
   return (
-    <Navbar expand="lg" variant="dark" className="top-navbar-container">
+    <Navbar
+      expand="lg"
+      variant="dark"
+      fixed="top"
+      className="top-navbar-container"
+    >
       <Container
         fluid
         className="px-3 d-flex justify-content-between align-items-center"
       >
-        {/* Brand a sinistra */}
         <Navbar.Brand
           as={Link}
           to="/home"
@@ -32,7 +36,6 @@ export default function TopNavbar() {
           <span className="ms-2 navbar-title-text">FilmInPocket</span>
         </Navbar.Brand>
 
-        {/* Link visibili solo su lg+ */}
         <div className="d-none d-lg-flex align-items-center gap-5">
           <Nav.Link
             as={Link}
@@ -48,11 +51,9 @@ export default function TopNavbar() {
           </Nav.Link>
         </div>
 
-        {/* Toggle per xs–md */}
         <Navbar.Toggle aria-controls="navbar-offcanvas" className="d-lg-none" />
       </Container>
 
-      {/* Offcanvas menu per XS–MD */}
       <Navbar.Offcanvas
         id="navbar-offcanvas"
         aria-labelledby="navbar-offcanvas-label"

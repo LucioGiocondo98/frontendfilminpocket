@@ -3,7 +3,7 @@ import { Form, Button, Alert, Card, Row, Col } from "react-bootstrap";
 import "../styles/AuthForm.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import ToastMessage from "./ToastMessage"; // <-- nuovo componente
+import ToastMessage from "./ToastMessage";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);

@@ -1,43 +1,55 @@
-.floating-box {
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+.acquire-pack-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 120px);
 }
 
 .ticket-box {
   background-color: #1f1f1f;
   border: 1px solid #454541;
   border-radius: 10px;
-  padding: 10px;
-  text-align: center;
+  padding: 10px 20px;
   font-weight: bold;
   font-size: 1.2rem;
   color: rgb(255, 204, 0);
   box-shadow: 0 0 15px #454541;
+  min-width: 200px;
 }
-
 
 .ticket-icon {
   font-size: 1.5rem;
   color: rgb(255, 204, 0);
 }
 
-.cinematic-pack {
- 
-  box-shadow: 0 0 15px #454541;
-}
-.pack-container {
-  font-size: 5rem;
-  cursor: pointer;
-  transition: transform 0.3s ease, color 0.3s ease;
-  display: inline-block;
+.next-ticket-text {
+  color: #ffffffcc;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  font-family: 'Lobster', cursive;
 }
 
-.pack-container:hover {
-  transform: scale(1.1) rotate(-5deg);
-  color: #ffc107;
+.pack-container {
+  max-height: 70vh;
+  max-width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinematic-pack {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  box-shadow: 0 0 15px #454541;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+ animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
 }

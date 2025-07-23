@@ -1,6 +1,6 @@
 import { Card } from "react-bootstrap";
 import pellicola from "../assets/pellicola.jpg";
-
+import "../styles/Card.css";
 export default function MovieCard({ card }) {
   const getBorderStyle = (rarity) => {
     switch (card.rarity) {
@@ -27,6 +27,7 @@ export default function MovieCard({ card }) {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backdropFilter: "blur(2px)",
+        position: "relative",
       }}
     >
       {card.imageUrl && (
@@ -70,6 +71,9 @@ export default function MovieCard({ card }) {
           </li>
         </ul>
       </Card.Body>
+      <div className={`card-rarity-badge ${card.rarity.toLowerCase()}`}>
+        {card.rarity}
+      </div>
     </Card>
   );
 }

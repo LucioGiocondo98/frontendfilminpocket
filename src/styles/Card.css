@@ -1,0 +1,28 @@
+.card-rarity-badge {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: black;
+  color: #ffc107;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid #000000;
+  box-shadow: 0 0 5px #000;
+  z-index: 5;
+}
+
+.card-rarity-badge.common {
+  background-color: white;
+  color: black;
+}
+.card-rarity-badge.rare {
+  background-color: silver;
+  color: black;
+}
+.card-rarity-badge.epic {
+  background-color: gold;
+  color: black;
+}

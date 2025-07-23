@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/AcquirePack.css";
@@ -10,6 +10,7 @@ export default function AcquirePack() {
   const [nextRecharge, setNextRecharge] = useState(null);
   const [timeLeft, setTimeLeft] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     fetch("http://localhost:8080/users/me/tickets", {
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -72,35 +73,30 @@ export default function AcquirePack() {
   };
 
   return (
-    <Container fluid className="text-light">
-      {/* Sezione Ticket a sinistra */}
-      <Row>
-        <Col xs={3} lg={3}>
-          <div className="ticket-box">
+    <Container fluid className="text-light acquire-pack-wrapper">
+      <Row className="justify-content-center  h-100 g-5">
+        <Col
+          xs={8}
+          md={3}
+          className="d-flex flex-column align-items-center justify-content-start"
+        >
+          <div className="ticket-box text-center">
             <div>
               <i className="bi bi-ticket-detailed ticket-icon"></i>
             </div>
             <div>{filmTickets ?? "..."}</div>
+            {filmTickets === 0 && nextRecharge && (
+              <div className="next-ticket-text">Next ticket in: {timeLeft}</div>
+            )}
           </div>
-          <Row className="mt-3">
-            <Col className="text-center">
-              {filmTickets === 0 && nextRecharge && (
-                <div>Next ticket in: {timeLeft}</div>
-              )}
-            </Col>
-          </Row>
         </Col>
-      </Row>
 
-      {/* Sezione pacchetto centrato con animazione */}
-      <Row className="justify-content-center mt-4">
-        <Col xs={8} lg={10}>
-          <div className="text-center floating-box pack-container">
+        <Col xs={12} md={9} className="d-flex justify-content-center pb-5">
+          <div className="pack-container floating-box pb-3">
             <img
               src="/PackFilmInPocket.png"
               alt="Pacchetto"
               className="img-fluid rounded cinematic-pack"
-              style={{ cursor: "pointer" }}
               onClick={handleOpenPack}
             />
           </div>

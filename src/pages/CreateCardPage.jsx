@@ -160,8 +160,8 @@ const CreateCardPage = () => {
         className="flex-grow-1"
         style={{ padding: "2rem 1rem 100px" }}
       >
-        <Row>
-          <h3>Crea una nuova card</h3>
+        <Row className="py-5">
+          <h3 style={{ color: "#F0C420" }}>Crea una nuova card</h3>
 
           <Col md={5}>
             <Form onSubmit={handleCreate}>
