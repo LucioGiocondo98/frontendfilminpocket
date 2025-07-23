@@ -45,6 +45,7 @@ const AuthForm = () => {
 
   const handleLogin = () => {
     const credentials = { username, password };
+    console.log("API_URL usato:", API_URL);
     fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
