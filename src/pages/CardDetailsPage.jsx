@@ -52,7 +52,7 @@ export default function CardDetailsPage() {
   }
 
   return (
-    <div className="min-vh-100 text-white d-flex flex-column pb-3">
+    <div className="min-vh-100 text-white d-flex flex-column py-5">
       <TopNavbar />
 
       <Container className="flex-grow-1 pt-3 mt-3 vh-80 pb-5">

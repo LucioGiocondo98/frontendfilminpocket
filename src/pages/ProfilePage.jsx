@@ -104,12 +104,12 @@ const ProfilePage = () => {
   return (
     <>
       <TopNavbar />
-      <Container className="my-3 pb-5 text-light">
+      <Container className="my-3 text-light">
         <ToastMessage
           {...toast}
           onClose={() => setToast({ ...toast, show: false })}
         />
-        <Row className="justify-content-center align-items-center pb-5">
+        <Row className="justify-content-center align-items-center mt-5 py-3">
           <Col xs={8} className="text-center">
             <Card
               bg="dark"
