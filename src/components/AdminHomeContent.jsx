@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { GiFilmSpool } from "react-icons/gi";
 import ToastMessage from "./ToastMessage";
 import "../styles/AdminPage.css";
+import API_URL from "../apiConfig";
 
 const AdminHomeContent = () => {
   const navigate = useNavigate();
