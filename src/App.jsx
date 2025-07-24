@@ -114,6 +114,7 @@ function App() {
           </AdminRoute>
         }
       />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
