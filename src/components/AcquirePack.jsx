@@ -67,7 +67,21 @@ const AcquirePack = function () {
       })
       .then((data) => {
         console.log("Carte estratte:", data);
-        setFilmTickets((prev) => prev - 1);
+        fetch(`${API_URL}/users/me/tickets`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error("Errore nel recupero ticket");
+            return res.json();
+          })
+          .then((ticketData) => {
+            setFilmTickets(ticketData.filmTickets);
+            setNextRecharge(ticketData.nextTicketRechargeTime);
+          })
+          .catch((err) => {
+            console.error("Errore durante il recupero dei ticket:", err);
+          });
+
         navigate("/pack-opening", { state: { cards: data } });
       })
       .catch((err) => console.error("Errore apertura pacco:", err));
