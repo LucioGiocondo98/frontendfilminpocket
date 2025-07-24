@@ -76,7 +76,7 @@ export default function TopNavbar() {
               <TbCardsFilled size={20} />
               Collezione
             </Nav.Link>
-            <Nav.Link as={Link} to="/mazzi" className="top-navbar-link">
+            <Nav.Link as={Link} to="/decks" className="top-navbar-link">
               <MdOutlineCollectionsBookmark size={20} />
               Mazzi
             </Nav.Link>
