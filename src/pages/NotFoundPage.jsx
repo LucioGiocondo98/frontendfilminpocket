@@ -5,7 +5,7 @@ import BottomNavbar from "../components/BottomNavbar";
 
 const NotFoundPage = () => {
   return (
-    <div className="d-flex flex-column min-vh-100 text-light bg-dark">
+    <div className="d-flex flex-column min-vh-100 text-light">
       <TopNavbar />
 
       <Container className="flex-grow-1 d-flex flex-column justify-content-center align-items-center">
