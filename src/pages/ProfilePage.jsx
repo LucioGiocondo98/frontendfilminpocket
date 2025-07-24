@@ -197,12 +197,6 @@ const ProfilePage = () => {
                     <li className="mb-2">
                       <strong>Ruolo:</strong> {user.role.replace("ROLE_", "")}
                     </li>
-                    <li className="mb-2">
-                      <strong>Prossimo ticket:</strong>{" "}
-                      {user.nextTicketRechargeTime
-                        ? formatDateTime(user.nextTicketRechargeTime)
-                        : "--"}
-                    </li>
                     <li>
                       <Button
                         variant="warning"
