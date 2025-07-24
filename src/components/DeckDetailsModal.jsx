@@ -45,7 +45,7 @@ const DeckDetailsModal = ({
             deck.cards.map((card) => {
               const isSelected = editable && selectedCardIds.includes(card.id);
               return (
-                <Col key={card.id} xs={6} md={4}>
+                <Col key={card.id} xs={10} md={6} xl={4}>
                   <div
                     className={`selectable-card ${
                       isSelected ? "selected" : ""
