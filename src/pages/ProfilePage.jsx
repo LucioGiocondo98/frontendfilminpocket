@@ -7,7 +7,7 @@ import BottomNavbar from "../components/BottomNavbar";
 import API_URL from "../apiConfig";
 
 const ProfilePage = () => {
-  const { user, accessToken, setUser } = useAuth();
+  const { user, accessToken, setUser, refreshUser } = useAuth();
 
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
@@ -20,7 +20,12 @@ const ProfilePage = () => {
   });
   const [editMode, setEditMode] = useState(false);
 
-  // Sincronizza email e previewUrl quando cambia user
+  useEffect(() => {
+    if (accessToken) {
+      refreshUser();
+    }
+  }, [accessToken, refreshUser]);
+
   useEffect(() => {
     if (user) {
       setEmail(user.email || "");

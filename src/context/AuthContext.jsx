@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  // Nuova funzione per aggiornare dati utente da backend
   const refreshUser = () => {
     if (!accessToken) return;
     fetch(`${API_URL}/users/me`, {
