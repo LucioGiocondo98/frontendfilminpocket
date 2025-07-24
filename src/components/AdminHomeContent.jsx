@@ -59,7 +59,7 @@ const AdminHomeContent = () => {
               className="admin-grid-item d-flex align-items-center justify-content-center gap-2"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                fetch(`${API_URL}/admin/recharge-tickets`, {
+                fetch(`${API_URL}/admin/force-recharge`, {
                   method: "POST",
                   headers: {
                     Authorization: `Bearer ${localStorage.getItem(
