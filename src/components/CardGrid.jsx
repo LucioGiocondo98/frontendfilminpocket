@@ -27,7 +27,7 @@ const CardGrid = function ({ cards, selectedCards = [], onCardClick, mode }) {
           );
 
         return (
-          <Col key={card.id} xs={6} xl={4}>
+          <Col key={card.id} xs={10} md={6} xl={4}>
             {onCardClick ? (
               <div
                 className={`selectable-card ${

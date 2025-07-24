@@ -24,6 +24,7 @@ const CreateCardPage = () => {
   });
   const [filmographyInput, setFilmographyInput] = useState("");
   const [imageFile, setImageFile] = useState(null);
+  const [creating, setCreating] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [toast, setToast] = useState({
     show: false,
@@ -70,6 +71,7 @@ const CreateCardPage = () => {
 
   const handleCreate = (e) => {
     e.preventDefault();
+    setCreating(true);
 
     const body = {
       ...formData,
@@ -111,6 +113,7 @@ const CreateCardPage = () => {
           message: err.message || "Errore",
           variant: "danger",
         });
+        setCreating(false);
       });
   };
 
@@ -147,6 +150,7 @@ const CreateCardPage = () => {
       })
       .finally(() => {
         setUploading(false);
+        setCreating(false);
         resetForm();
       });
   };
@@ -176,8 +180,14 @@ const CreateCardPage = () => {
                 imageFile={imageFile}
                 onImageChange={handleImageChange}
               />
-              <Button type="submit" variant="warning" className="mt-2">
-                {uploading ? (
+
+              <Button
+                type="submit"
+                variant="warning"
+                className="mt-2"
+                disabled={creating || uploading}
+              >
+                {creating || uploading ? (
                   <>
                     Caricamento... <Spinner animation="border" size="sm" />
                   </>
@@ -188,12 +198,21 @@ const CreateCardPage = () => {
             </Form>
           </Col>
 
-          <Col md={6}>
-            <CardPreview
-              cardType={cardType}
-              formData={formData}
-              imageFile={imageFile}
-            />
+          <Col md={6} className="text-center">
+            {(creating || uploading) && (
+              <div className="my-4">
+                <Spinner animation="border" variant="warning" />
+                <p className="mt-2">Creazione in corso...</p>
+              </div>
+            )}
+
+            {!creating && !uploading && (
+              <CardPreview
+                cardType={cardType}
+                formData={formData}
+                imageFile={imageFile}
+              />
+            )}
           </Col>
         </Row>
       </Container>

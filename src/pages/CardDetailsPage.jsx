@@ -43,7 +43,7 @@ export default function CardDetailsPage() {
   if (loading) {
     return (
       <Container className="text-center mt-5 text-white">
-        <Spinner animation="border" variant="light" />
+        <Spinner animation="border" variant="warning" />
       </Container>
     );
   }

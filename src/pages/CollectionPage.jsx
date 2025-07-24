@@ -12,10 +12,11 @@ export default function CollectionPage() {
   console.log("Acces token in Collection Page: ", accessToken);
   const [cards, setCards] = useState([]);
   const [filters, setFilters] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!accessToken || !user) return;
-
+    setLoading(true);
     const params = new URLSearchParams();
     if (filters.rarity) params.append("rarity", filters.rarity);
     if (filters.genre) params.append("genre", filters.genre);
@@ -42,7 +43,8 @@ export default function CollectionPage() {
       .catch((err) => {
         console.error("Errore fetch carte:", err);
         setCards([]);
-      });
+      })
+      .finally(() => setLoading(false));
   }, [filters, accessToken, user]);
 
   return (
@@ -54,7 +56,14 @@ export default function CollectionPage() {
             <SidebarFiltri onFilterChange={setFilters} />
           </Col>
           <Col xs={12} md={9} lg={10}>
-            <CardGrid cards={cards} />
+            {loading ? (
+              <div className="text-center text-light mt-4">
+                <Spinner animation="border" variant="warning" />
+                <p className="mt-2">Caricamento carte...</p>
+              </div>
+            ) : (
+              <CardGrid cards={cards} />
+            )}
           </Col>
         </Row>
         <BottomNavbar />

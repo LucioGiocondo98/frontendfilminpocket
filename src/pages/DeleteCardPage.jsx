@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
 import CardPreview from "../components/CardPreview";
@@ -11,6 +11,7 @@ const DeleteCardPage = () => {
   const { accessToken } = useAuth();
   const [inputId, setInputId] = useState("");
   const [cardToDelete, setCardToDelete] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState({
     show: false,
     message: "",
@@ -19,6 +20,7 @@ const DeleteCardPage = () => {
 
   const handleFetch = () => {
     if (!inputId) return;
+    setLoading(true);
     fetch(`${API_URL}/cards/${inputId}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
@@ -35,11 +37,13 @@ const DeleteCardPage = () => {
           message: err.message || "Errore",
           variant: "danger",
         });
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleDelete = () => {
     if (!inputId) return;
+    setLoading(true);
     fetch(`${API_URL}/cards/${inputId}`, {
       method: "DELETE",
       headers: {
@@ -63,7 +67,8 @@ const DeleteCardPage = () => {
           message: err.message || "Errore",
           variant: "danger",
         });
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -108,12 +113,19 @@ const DeleteCardPage = () => {
             xs={12}
             className="d-flex align-items-center justify-content-center mt-3"
           >
-            {cardToDelete && (
-              <CardPreview
-                cardType={cardToDelete.cardType}
-                formData={cardToDelete}
-                imageFile={cardToDelete.imageFile}
-              />
+            {loading ? (
+              <div className="text-center my-4">
+                <Spinner animation="border" variant="warning" />
+                <p className="mt-2">Operazione in corso...</p>
+              </div>
+            ) : (
+              cardToDelete && (
+                <CardPreview
+                  cardType={cardToDelete.cardType}
+                  formData={cardToDelete}
+                  imageFile={cardToDelete.imageFile}
+                />
+              )
             )}
           </Col>
         </Row>
