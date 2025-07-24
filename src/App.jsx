@@ -17,6 +17,7 @@ import DeckPage from "./pages/DeckPage";
 import WelcomePage from "./pages/WelcomePage";
 import PackOpeningAnimation from "./components/PackOpeningAnimation";
 import ProfilePage from "./pages/ProfilePage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const AuthLayout = () => (
   <Container
