@@ -1,13 +1,5 @@
-import { useState } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Image,
-  Card,
-} from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import ToastMessage from "../components/ToastMessage";
 import TopNavbar from "../components/TopNavbar";
@@ -16,6 +8,7 @@ import API_URL from "../apiConfig";
 
 const ProfilePage = () => {
   const { user, accessToken, setUser } = useAuth();
+
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [image, setImage] = useState(null);
@@ -26,6 +19,14 @@ const ProfilePage = () => {
     variant: "success",
   });
   const [editMode, setEditMode] = useState(false);
+
+  // Sincronizza email e previewUrl quando cambia user
+  useEffect(() => {
+    if (user) {
+      setEmail(user.email || "");
+      setPreviewUrl(user.imageUrl || "");
+    }
+  }, [user]);
 
   const handleUpdateProfile = () => {
     fetch(`${API_URL}/users/me`, {

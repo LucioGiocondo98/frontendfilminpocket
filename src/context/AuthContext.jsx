@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import API_URL from "../apiConfig";
 
 const AuthContext = createContext();
 
@@ -25,8 +26,29 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  // Nuova funzione per aggiornare dati utente da backend
+  const refreshUser = () => {
+    if (!accessToken) return;
+    fetch(`${API_URL}/users/me`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore nel recupero utente");
+        return res.json();
+      })
+      .then((data) => {
+        setUser(data);
+        localStorage.setItem("user", JSON.stringify(data));
+      })
+      .catch((err) => {
+        console.error("refreshUser error:", err);
+      });
+  };
+
   return (
-    <AuthContext.Provider value={{ accessToken, user, setUser, login, logout }}>
+    <AuthContext.Provider
+      value={{ accessToken, user, setUser, login, logout, refreshUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
