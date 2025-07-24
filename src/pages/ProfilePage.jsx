@@ -12,6 +12,7 @@ import { useAuth } from "../context/AuthContext";
 import ToastMessage from "../components/ToastMessage";
 import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
+import API_URL from "../apiConfig";
 
 const ProfilePage = () => {
   const { user, accessToken, setUser } = useAuth();
@@ -27,7 +28,7 @@ const ProfilePage = () => {
   const [editMode, setEditMode] = useState(false);
 
   const handleUpdateProfile = () => {
-    fetch("http://localhost:8080/users/me", {
+    fetch(`${API_URL}/users/me`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -63,7 +64,7 @@ const ProfilePage = () => {
     const formData = new FormData();
     formData.append("image", image);
 
-    fetch("http://localhost:8080/users/me/image", {
+    fetch(`${API_URL}/users/me/image`, {
       method: "PUT",
       headers: { Authorization: `Bearer ${accessToken}` },
       body: formData,

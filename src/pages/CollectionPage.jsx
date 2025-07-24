@@ -5,6 +5,7 @@ import CardGrid from "../components/CardGrid";
 import { useAuth } from "../context/AuthContext";
 import BottomNavbar from "../components/BottomNavbar";
 import TopNavbar from "../components/TopNavbar";
+import API_URL from "../apiConfig";
 
 export default function CollectionPage() {
   const { accessToken, user } = useAuth();
@@ -24,8 +25,8 @@ export default function CollectionPage() {
 
     const endpoint =
       user.role === "ROLE_ADMIN"
-        ? `http://localhost:8080/admin/filtered/cards?${params.toString()}`
-        : `http://localhost:8080/cards/collection?${params.toString()}`;
+        ? `${API_URL}/admin/filtered/cards?${params.toString()}`
+        : `${API_URL}/cards/collection?${params.toString()}`;
 
     fetch(endpoint, {
       headers: { Authorization: `Bearer ${accessToken}` },

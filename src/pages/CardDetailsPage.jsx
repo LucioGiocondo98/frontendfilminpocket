@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
 import "../styles/Card.css";
+import API_URL from "../apiConfig";
 
 export default function CardDetailsPage() {
   const { id } = useParams();
@@ -27,7 +28,7 @@ export default function CardDetailsPage() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8080/cards/${id}`, {
+    fetch(`${API_URL}/cards/${id}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((res) => {

@@ -7,6 +7,7 @@ import CardForm from "../components/CardForm";
 import ImageUpload from "../components/ImageUpload";
 import CardPreview from "../components/CardPreview";
 import ToastMessage from "../components/ToastMessage";
+import API_URL from "../apiConfig";
 
 const EditCardPage = () => {
   const { accessToken } = useAuth();
@@ -24,7 +25,7 @@ const EditCardPage = () => {
 
   const handleFetch = () => {
     if (!inputId) return;
-    fetch(`http://localhost:8080/cards/${inputId}`, {
+    fetch(`${API_URL}/cards/${inputId}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((res) => {
@@ -81,7 +82,7 @@ const EditCardPage = () => {
 
     console.log("Dati da salvare:", updatedCard);
 
-    fetch(`http://localhost:8080/cards/${inputId}`, {
+    fetch(`${API_URL}/cards/${inputId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -112,7 +113,7 @@ const EditCardPage = () => {
     formDataImage.append("image", imageFile);
     setUploading(true);
 
-    fetch(`http://localhost:8080/cards/${id}/image`, {
+    fetch(`${API_URL}/cards/${id}/image`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,

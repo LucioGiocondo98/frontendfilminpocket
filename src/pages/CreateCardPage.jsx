@@ -1,4 +1,3 @@
-// CreateCardPage.jsx
 import { useState } from "react";
 import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import TopNavbar from "../components/TopNavbar";
@@ -8,6 +7,7 @@ import CardForm from "../components/CardForm";
 import ImageUpload from "../components/ImageUpload";
 import CardPreview from "../components/CardPreview";
 import ToastMessage from "../components/ToastMessage";
+import API_URL from "../apiConfig";
 
 const CreateCardPage = () => {
   const { accessToken } = useAuth();
@@ -80,7 +80,7 @@ const CreateCardPage = () => {
       body.releaseYear = parseInt(formData.releaseYear);
     }
 
-    fetch("http://localhost:8080/cards", {
+    fetch(`${API_URL}/cards`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -119,7 +119,7 @@ const CreateCardPage = () => {
     formDataImage.append("image", imageFile);
     setUploading(true);
 
-    fetch(`http://localhost:8080/cards/${id}/image`, {
+    fetch(`${API_URL}/cards/${id}/image`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${accessToken}`,

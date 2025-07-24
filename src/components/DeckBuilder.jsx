@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import DeckSidebar from "../components/DeckSidebar";
 import DeckDetailsModal from "../components/DeckDetailsModal";
 import ToastMessage from "../components/ToastMessage";
+import API_URL from "../apiConfig";
 
 const DeckBuilder = () => {
   const { accessToken } = useAuth();
@@ -26,7 +27,7 @@ const DeckBuilder = () => {
 
   useEffect(() => {
     if (["edit", "view", "delete"].includes(mode)) {
-      fetch("http://localhost:8080/decks", {
+      fetch(`${API_URL}/decks`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
         .then((res) => res.json())
@@ -53,8 +54,8 @@ const DeckBuilder = () => {
     const deckData = { name: deckName, cardIds: selectedCards };
     const method = editingDeck ? "PUT" : "POST";
     const endpoint = editingDeck
-      ? `http://localhost:8080/decks/${editingDeck.id}`
-      : "http://localhost:8080/decks";
+      ? `${API_URL}/decks/${editingDeck.id}`
+      : `${API_URL}/decks`;
 
     fetch(endpoint, {
       method,
@@ -90,7 +91,7 @@ const DeckBuilder = () => {
   };
 
   const handleDeleteDeck = (deckId) => {
-    fetch(`http://localhost:8080/decks/${deckId}`, {
+    fetch(`${API_URL}/decks/${deckId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${accessToken}` },
     })
@@ -183,7 +184,7 @@ const DeckBuilder = () => {
                     setEditingDeck(deck);
                     setDeckName(deck.name);
                     setSelectedCards(deck.cards.map((c) => c.id));
-                    fetch("http://localhost:8080/cards/collection?size=100", {
+                    fetch("${API_URL}/cards/collection?size=100", {
                       headers: { Authorization: `Bearer ${accessToken}` },
                     })
                       .then((res) => res.json())

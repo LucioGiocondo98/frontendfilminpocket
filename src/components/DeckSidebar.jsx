@@ -1,4 +1,5 @@
 import { Button, Stack } from "react-bootstrap";
+import API_URL from "../apiConfig";
 
 const DeckSidebar = ({
   accessToken,
@@ -11,7 +12,7 @@ const DeckSidebar = ({
 }) => {
   const fetchDecks = () => {
     setLoading(true);
-    fetch("http://localhost:8080/decks", {
+    fetch(`${API_URL}/decks`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((res) => res.json())
@@ -25,7 +26,7 @@ const DeckSidebar = ({
 
   const fetchCards = () => {
     setLoading(true);
-    fetch("http://localhost:8080/cards/collection?size=100", {
+    fetch(`${API_URL}/cards/collection?size=100`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((res) => res.json())

@@ -1,4 +1,3 @@
-// src/pages/WelcomePage.jsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/WelcomePage.css";

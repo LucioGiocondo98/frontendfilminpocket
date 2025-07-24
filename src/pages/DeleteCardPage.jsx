@@ -5,6 +5,7 @@ import BottomNavbar from "../components/BottomNavbar";
 import CardPreview from "../components/CardPreview";
 import ToastMessage from "../components/ToastMessage";
 import { useAuth } from "../context/AuthContext";
+import API_URL from "../apiConfig";
 
 const DeleteCardPage = () => {
   const { accessToken } = useAuth();
@@ -18,7 +19,7 @@ const DeleteCardPage = () => {
 
   const handleFetch = () => {
     if (!inputId) return;
-    fetch(`http://localhost:8080/cards/${inputId}`, {
+    fetch(`${API_URL}/cards/${inputId}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((res) => {
@@ -39,7 +40,7 @@ const DeleteCardPage = () => {
 
   const handleDelete = () => {
     if (!inputId) return;
-    fetch(`http://localhost:8080/cards/${inputId}`, {
+    fetch(`${API_URL}/cards/${inputId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${accessToken}`,

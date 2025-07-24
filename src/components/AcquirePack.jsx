@@ -3,8 +3,9 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/AcquirePack.css";
+import API_URL from "../apiConfig";
 
-export default function AcquirePack() {
+const AcquirePack = function () {
   const { accessToken } = useAuth();
   const [filmTickets, setFilmTickets] = useState(null);
   const [nextRecharge, setNextRecharge] = useState(null);
@@ -12,7 +13,7 @@ export default function AcquirePack() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:8080/users/me/tickets", {
+    fetch(`${API_URL}/users/me/tickets`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
       .then((res) => {
@@ -56,7 +57,7 @@ export default function AcquirePack() {
   }, [nextRecharge]);
 
   const handleOpenPack = () => {
-    fetch("http://localhost:8080/me/acquire-pack", {
+    fetch(`${API_URL}/me/acquire-pack`, {
       method: "POST",
       headers: { Authorization: `Bearer ${accessToken}` },
     })
@@ -104,4 +105,5 @@ export default function AcquirePack() {
       </Row>
     </Container>
   );
-}
+};
+export default AcquirePack;

@@ -12,7 +12,7 @@ export default function PackOpeningAnimation() {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/pack-opened", { state: { cards } });
-    }, 2500); // ⏱️ durata animazione aggiornata
+    }, 2500);
     return () => clearTimeout(timer);
   }, [navigate, cards]);
 

@@ -1,9 +1,7 @@
-// DeckPage.jsx
 import { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
-import DeckSidebar from "../components/DeckSidebar";
 import DeckBuilder from "../components/DeckBuilder";
 
 const DeckPage = () => {
