@@ -79,8 +79,6 @@ const EditCardPage = () => {
       imageUrl: formCard.imageUrl || "",
     };
 
-    console.log("Dati da salvare:", updatedCard);
-
     fetch(`http://localhost:8080/cards/${inputId}`, {
       method: "PUT",
       headers: {

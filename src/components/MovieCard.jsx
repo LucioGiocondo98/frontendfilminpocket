@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import pellicola from "../assets/pellicola.jpg";
 import "../styles/Card.css";
-export default function MovieCard({ card }) {
+const MovieCard = function ({ card }) {
   const getBorderStyle = (rarity) => {
     switch (card.rarity) {
       case "COMMON":
@@ -76,4 +76,5 @@ export default function MovieCard({ card }) {
       </div>
     </Card>
   );
-}
+};
+export default MovieCard;

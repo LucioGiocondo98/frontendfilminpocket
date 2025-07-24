@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import pellicola from "../assets/pellicola.jpg";
 import "../styles/Card.css";
 
-export default function PersonCard({ card }) {
+const PersonCard = function ({ card }) {
   const getBorderStyle = (rarity) => {
     switch (card.rarity) {
       case "COMMON":
@@ -87,4 +87,5 @@ export default function PersonCard({ card }) {
       </div>
     </Card>
   );
-}
+};
+export default PersonCard;

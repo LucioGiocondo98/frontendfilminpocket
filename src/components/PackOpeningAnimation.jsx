@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { GiClapperboard } from "react-icons/gi";
 import "../styles/PackOpeningAnimation.css";
 
-export default function PackOpeningAnimation() {
+const PackOpeningAnimation = function () {
   const navigate = useNavigate();
   const location = useLocation();
   const cards = location.state?.cards || [];
@@ -12,7 +12,7 @@ export default function PackOpeningAnimation() {
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/pack-opened", { state: { cards } });
-    }, 2500); // ⏱️ durata animazione aggiornata
+    }, 2500);
     return () => clearTimeout(timer);
   }, [navigate, cards]);
 
@@ -25,4 +25,5 @@ export default function PackOpeningAnimation() {
       <div className="film-subtitle">Collectible Cards</div>
     </div>
   );
-}
+};
+export default PackOpeningAnimation;

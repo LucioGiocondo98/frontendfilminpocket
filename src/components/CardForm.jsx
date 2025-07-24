@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 
-function CardForm({
+const CardForm = function ({
   cardType,
   formData,
   onChange,
@@ -104,6 +104,6 @@ function CardForm({
       {renderTypeSpecificFields()}
     </>
   );
-}
+};
 
 export default CardForm;

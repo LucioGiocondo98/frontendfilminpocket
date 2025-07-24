@@ -6,7 +6,7 @@ import TopNavbar from "../components/TopNavbar";
 import BottomNavbar from "../components/BottomNavbar";
 import "../styles/Card.css";
 
-export default function CardDetailsPage() {
+const CardDetailsPage = function () {
   const { id } = useParams();
   const { accessToken } = useAuth();
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -169,4 +169,5 @@ export default function CardDetailsPage() {
       </div>
     </div>
   );
-}
+};
+export default CardDetailsPage;

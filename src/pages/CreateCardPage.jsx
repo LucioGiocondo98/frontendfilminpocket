@@ -105,7 +105,6 @@ const CreateCardPage = () => {
         }
       })
       .catch((err) => {
-        console.error(err);
         setToast({
           show: true,
           message: err.message || "Errore",

@@ -7,9 +7,9 @@ import "../styles/CardGrid.css";
 const CardGrid = function ({ cards, selectedCards = [], onCardClick, mode }) {
   if (!cards || cards.length === 0) {
     return (
-      <p className="text-white text-center mt-4">
+      <h3 className="text-white text-center mt-4">
         Nessuna carta nella collezione
-      </p>
+      </h3>
     );
   }
 

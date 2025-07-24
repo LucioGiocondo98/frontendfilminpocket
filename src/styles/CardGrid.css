@@ -1,7 +1,1 @@
-.selectable-card.selected {
-  border: 3px solid limegreen;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(50, 205, 50, 0.6);
-  transform: scale(1.02);
-  transition: all 0.2s ease-in-out;
-}
+

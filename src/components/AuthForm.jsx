@@ -4,7 +4,6 @@ import "../styles/AuthForm.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ToastMessage from "./ToastMessage";
-import API_URL from "../apiConfig";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -15,6 +14,7 @@ const AuthForm = () => {
   const [isClapping, setIsClapping] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const API_URL = "http://localhost:8080";
   const [toast, setToast] = useState({
     show: false,
     message: "",
@@ -52,7 +52,6 @@ const AuthForm = () => {
     })
       .then(handleResponse)
       .then((data) => {
-        console.log("User dopo login:", data.user);
         login(data.accessToken, data.user);
         showToast("Login effettuato con successo!", "success");
 

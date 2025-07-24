@@ -8,7 +8,7 @@ import { TbCardsFilled } from "react-icons/tb";
 import { FaDoorOpen } from "react-icons/fa6";
 import { TfiUser } from "react-icons/tfi";
 
-export default function TopNavbar() {
+const TopNavbar = function () {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -93,4 +93,5 @@ export default function TopNavbar() {
       </Navbar.Offcanvas>
     </Navbar>
   );
-}
+};
+export default TopNavbar;

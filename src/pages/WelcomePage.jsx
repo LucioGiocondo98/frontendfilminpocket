@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/WelcomePage.css";
 
-export default function WelcomePage() {
+const WelcomePage = function () {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,4 +23,5 @@ export default function WelcomePage() {
       <p className="welcome-touch-text">Tocca ovunque per continuare</p>
     </div>
   );
-}
+};
+export default WelcomePage;

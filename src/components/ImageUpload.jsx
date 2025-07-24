@@ -1,6 +1,6 @@
 import { Form } from "react-bootstrap";
 
-function ImageUpload({ imageFile, onImageChange, currentImageUrl }) {
+const ImageUpload = function ({ imageFile, onImageChange, currentImageUrl }) {
   return (
     <Form.Group className="mb-2">
       <Form.Label>Immagine</Form.Label>
@@ -14,6 +14,6 @@ function ImageUpload({ imageFile, onImageChange, currentImageUrl }) {
       </Form.Text>
     </Form.Group>
   );
-}
+};
 
 export default ImageUpload;

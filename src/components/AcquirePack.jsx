@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/AcquirePack.css";
 
-export default function AcquirePack() {
+const AcquirePack = function () {
   const { accessToken } = useAuth();
   const [filmTickets, setFilmTickets] = useState(null);
   const [nextRecharge, setNextRecharge] = useState(null);
@@ -104,4 +104,5 @@ export default function AcquirePack() {
       </Row>
     </Container>
   );
-}
+};
+export default AcquirePack;

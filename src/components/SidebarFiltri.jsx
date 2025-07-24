@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
-export default function SidebarFiltri({ onFilterChange }) {
+const SidebarFiltri = function ({ onFilterChange }) {
   const [rarity, setRarity] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
@@ -79,4 +79,5 @@ export default function SidebarFiltri({ onFilterChange }) {
       </Button>
     </Form>
   );
-}
+};
+export default SidebarFiltri;

@@ -6,9 +6,8 @@ import { useAuth } from "../context/AuthContext";
 import BottomNavbar from "../components/BottomNavbar";
 import TopNavbar from "../components/TopNavbar";
 
-export default function CollectionPage() {
+const CollectionPage = function () {
   const { accessToken, user } = useAuth();
-  console.log("Acces token in Collection Page: ", accessToken);
   const [cards, setCards] = useState([]);
   const [filters, setFilters] = useState({});
 
@@ -35,7 +34,6 @@ export default function CollectionPage() {
         return res.json();
       })
       .then((data) => {
-        console.log("Dati ricevuti:", data);
         setCards(data.content || data);
       })
       .catch((err) => {
@@ -60,4 +58,5 @@ export default function CollectionPage() {
       </Container>
     </div>
   );
-}
+};
+export default CollectionPage;

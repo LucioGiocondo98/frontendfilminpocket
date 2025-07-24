@@ -5,7 +5,7 @@ import BottomNavbar from "../components/BottomNavbar";
 import PersonCard from "../components/PersonCard";
 import MovieCard from "../components/MovieCard";
 
-export default function PackOpenedPage() {
+const PackOpenedPage = function () {
   const location = useLocation();
   const cards = location.state?.cards || [];
 
@@ -56,4 +56,5 @@ export default function PackOpenedPage() {
       <BottomNavbar />
     </div>
   );
-}
+};
+export default PackOpenedPage;
