@@ -14,7 +14,10 @@ const CardGrid = function ({ cards, selectedCards = [], onCardClick, mode }) {
   }
 
   return (
-    <Row className="g-3" style={{ paddingBottom: "3rem" }}>
+    <Row
+      className="g-3 justify-content-center"
+      style={{ paddingBottom: "3rem" }}
+    >
       {cards.map((card) => {
         const cardType = card.cardType?.toUpperCase();
         const isSelected = selectedCards.includes(card.id);
