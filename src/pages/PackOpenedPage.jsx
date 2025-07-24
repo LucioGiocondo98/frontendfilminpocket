@@ -23,7 +23,7 @@ export default function PackOpenedPage() {
   };
 
   return (
-    <div className="bg-dark min-vh-100 text-light">
+    <div className=" min-vh-100 text-light">
       <TopNavbar />
 
       <Container className="pt-5 mt-5 pb-5">
