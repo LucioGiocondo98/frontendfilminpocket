@@ -26,7 +26,7 @@ Ho integrato:
 - **React Router** per gestire la navigazione tra le pagine,
 - **React-Bootstrap** per avere componenti già pronti e responsive,
 - **Context API** per la gestione dell'autenticazione JWT,
-- e un pizzico di **Bootstrap Icons** per dare stile e identità alle interfacce.
+- e un pizzico di **Bootstrap Icons e React Icons** per dare stile e identità alle interfacce.
 
 ## Funzionalità principali
 
@@ -71,6 +71,20 @@ Mi chiamo **Lucio Giocondo**, e FilmInPocket è il mio modo di **unire codice st
 
 Non avete bisogno di scaricare nulla poichè è deployato ed online
 qui vi lascio il link : **https://frontendfilminpocket.vercel.app**.
+
+Ma se voleste far girare il progetto in locale:
+Per il backend le dependencies da implementare per il corretto funzionamento della dev-branch,poichè il main è aggiornato alla stato atttuale per Koyeb, come dicevo, le dependecies da aggiungere sono :
+**-SpringBoot Data JPA,**
+**-SpringBoot Security,**
+**-SpringBoot Validation,**
+**-SpringBoot web,**
+**-SpringBoot Dev Tools,**
+**-PostreSQL Driver,**
+**-Cloudinary,**
+**-Lombok,**
+**-JJWT-API,**
+**-JJWT-Impl,**
+**-JJWT-Jackson.**
 
 ## Prossime feature
 
