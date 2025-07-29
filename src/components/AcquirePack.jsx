@@ -66,7 +66,6 @@ const AcquirePack = function () {
         return res.json();
       })
       .then((data) => {
-        console.log("Carte estratte:", data);
         fetch(`${API_URL}/users/me/tickets`, {
           headers: { Authorization: `Bearer ${accessToken}` },
         })

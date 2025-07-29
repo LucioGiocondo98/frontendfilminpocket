@@ -80,8 +80,6 @@ const EditCardPage = () => {
       imageUrl: formCard.imageUrl || "",
     };
 
-    console.log("Dati da salvare:", updatedCard);
-
     fetch(`${API_URL}/cards/${inputId}`, {
       method: "PUT",
       headers: {

@@ -9,7 +9,6 @@ import API_URL from "../apiConfig";
 
 export default function CollectionPage() {
   const { accessToken, user } = useAuth();
-  console.log("Acces token in Collection Page: ", accessToken);
   const [cards, setCards] = useState([]);
   const [filters, setFilters] = useState({});
   const [loading, setLoading] = useState(true);
@@ -37,7 +36,6 @@ export default function CollectionPage() {
         return res.json();
       })
       .then((data) => {
-        console.log("Dati ricevuti:", data);
         setCards(data.content || data);
       })
       .catch((err) => {
