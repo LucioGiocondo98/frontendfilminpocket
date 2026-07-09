@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { TextInput, Select, Button } from "@mantine/core";
 
 export default function SidebarFiltri({ onFilterChange }) {
   const [rarity, setRarity] = useState("");
@@ -13,7 +13,7 @@ export default function SidebarFiltri({ onFilterChange }) {
   };
 
   return (
-    <Form
+    <form
       onSubmit={handleSubmit}
       className="p-3 rounded text-light"
       style={{
@@ -26,57 +26,63 @@ export default function SidebarFiltri({ onFilterChange }) {
         <i className="bi bi-film"></i> Filtra le tue carte
       </h5>
 
-      <Form.Group className="mb-3">
-        <Form.Label className="text-warning">Rarità</Form.Label>
-        <Form.Select value={rarity} onChange={(e) => setRarity(e.target.value)}>
-          <option value="">Tutte</option>
-          <option value="COMMON">Common</option>
-          <option value="RARE">Rare</option>
-          <option value="EPIC">Epic</option>
-        </Form.Select>
-      </Form.Group>
+      <Select
+        mb="md"
+        label="Rarità"
+        labelProps={{ className: "text-warning" }}
+        value={rarity}
+        onChange={setRarity}
+        data={[
+          { value: "", label: "Tutte" },
+          { value: "COMMON", label: "Common" },
+          { value: "RARE", label: "Rare" },
+          { value: "EPIC", label: "Epic" },
+        ]}
+      />
 
-      <Form.Group className="mb-3">
-        <Form.Label className="text-warning">Genere</Form.Label>
-        <Form.Control
-          type="text"
-          value={genre}
-          onChange={(e) => setGenre(e.target.value)}
-          placeholder="Es. Drama"
-        />
-      </Form.Group>
+      <TextInput
+        mb="md"
+        label="Genere"
+        labelProps={{ className: "text-warning" }}
+        value={genre}
+        onChange={(e) => setGenre(e.target.value)}
+        placeholder="Es. Drama"
+      />
 
-      <Form.Group className="mb-3">
-        <Form.Label className="text-warning">Anno</Form.Label>
-        <Form.Control
-          type="number"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          placeholder="Es. 1972"
-        />
-      </Form.Group>
+      <TextInput
+        mb="md"
+        type="number"
+        label="Anno"
+        labelProps={{ className: "text-warning" }}
+        value={year}
+        onChange={(e) => setYear(e.target.value)}
+        placeholder="Es. 1972"
+      />
 
-      <Form.Group className="mb-3">
-        <Form.Label className="text-warning">Tipo Carta</Form.Label>
-        <Form.Select
-          value={cardType}
-          onChange={(e) => setCardType(e.target.value)}
-        >
-          <option value="">Tutti</option>
-          <option value="MOVIE">Movie</option>
-          <option value="ACTOR">Actor</option>
-          <option value="DIRECTOR">Director</option>
-        </Form.Select>
-      </Form.Group>
+      <Select
+        mb="md"
+        label="Tipo Carta"
+        labelProps={{ className: "text-warning" }}
+        value={cardType}
+        onChange={setCardType}
+        data={[
+          { value: "", label: "Tutti" },
+          { value: "MOVIE", label: "Movie" },
+          { value: "ACTOR", label: "Actor" },
+          { value: "DIRECTOR", label: "Director" },
+        ]}
+      />
 
       <Button
-        variant="warning"
         type="submit"
-        className="w-100 mt-3 text-uppercase fw-bold"
+        fullWidth
+        color="yellow"
+        mt="md"
+        className="text-uppercase fw-bold"
         style={{ fontFamily: "'Lobster', cursive" }}
       >
         Filtra
       </Button>
-    </Form>
+    </form>
   );
 }

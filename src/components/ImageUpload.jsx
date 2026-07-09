@@ -1,18 +1,20 @@
-import { Form } from "react-bootstrap";
+import { FileInput } from "@mantine/core";
 
 function ImageUpload({ imageFile, onImageChange, currentImageUrl }) {
   return (
-    <Form.Group className="mb-2">
-      <Form.Label>Immagine</Form.Label>
-      <Form.Control type="file" accept="image/*" onChange={onImageChange} />
-      <Form.Text className="text-muted">
-        {imageFile
+    <FileInput
+      mb="sm"
+      label="Immagine"
+      accept="image/*"
+      onChange={(file) => onImageChange({ target: { files: file ? [file] : [] } })}
+      description={
+        imageFile
           ? "Nuova immagine selezionata."
           : currentImageUrl
           ? "Immagine attuale mantenuta se non cambiata."
-          : "Nessuna immagine attuale."}
-      </Form.Text>
-    </Form.Group>
+          : "Nessuna immagine attuale."
+      }
+    />
   );
 }
 

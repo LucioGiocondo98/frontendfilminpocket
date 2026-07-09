@@ -54,11 +54,18 @@ Regole durante la transizione:
 - `src/pages/WelcomePage.jsx` — nessun bootstrap presente, nessuna modifica necessaria
 - `src/components/TopNavbar.jsx` (`Navbar`/`Offcanvas` → `Burger`/`Drawer` Mantine + `useDisclosure`, resto tag nativi con classi bootstrap invariate)
 - `src/components/BottomNavbar.jsx` (`Container`/`Row`/`Col` → tag nativi con stesse classi bootstrap; icona `Globe` da `react-bootstrap-icons` → `MdPublic` da `react-icons`)
+- `src/components/AuthForm.jsx` (`Form`/`Card`/`Row`/`Col` → `TextInput`/`Center`/`Button unstyled` Mantine, API pubblica invariata)
+- `src/pages/LoginPage.jsx` (`Container` → `Center`)
+- `src/pages/NotFoundPage.jsx` (`Container`/`Row`/`Col`/`Button` → `Center` Mantine + `Button component={Link}`)
+- `src/components/DeckDetailsModal.jsx` (`Modal`/`Row`/`Col`/`Form.Control` → `Modal`/`Grid`/`TextInput` Mantine, API pubblica invariata)
+- `src/components/CardForm.jsx` (`Form.Control`/`Form.Select` → `TextInput`/`Select` Mantine, `onChange` avvolto in evento sintetico `{target:{name,value}}` per non toccare i consumer CreateCardPage/EditCardPage)
+- `src/components/ImageUpload.jsx` (`Form.Control type="file"` → `FileInput` Mantine, `onImageChange` avvolto in evento sintetico `{target:{files:[...]}}` per non toccare i consumer)
+- `src/components/SidebarFiltri.jsx` (`Form`/`Form.Select`/`Button` → `TextInput`/`Select`/`Button` Mantine, stato interno non richiede eventi sintetici)
 
 ### File da migrare
 
-- `src/pages/`: CardDetailsPage.jsx, CollectionPage.jsx, CreateCardPage.jsx, DeleteCardPage.jsx, EditCardPage.jsx, HomePage.jsx, LoginPage.jsx, NotFoundPage.jsx, PackOpenedPage.jsx, ProfilePage.jsx
-- `src/components/`: CardForm.jsx, ImageUpload.jsx, AuthForm.jsx, AdminHomeContent.jsx, AcquirePack.jsx, DeckDetailsModal.jsx, CardGrid.jsx, DeckSidebar.jsx, DeckBuilder.jsx, MainContent.jsx, SidebarFiltri.jsx
+- `src/pages/`: CardDetailsPage.jsx, CollectionPage.jsx, CreateCardPage.jsx, DeleteCardPage.jsx, EditCardPage.jsx, HomePage.jsx, PackOpenedPage.jsx, ProfilePage.jsx
+- `src/components/`: AdminHomeContent.jsx, AcquirePack.jsx, CardGrid.jsx, DeckSidebar.jsx, DeckBuilder.jsx, MainContent.jsx
 
 ## Test
 

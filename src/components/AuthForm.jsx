@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Button, Alert, Card, Row, Col } from "react-bootstrap";
+import { TextInput, Button, Center } from "@mantine/core";
 import "../styles/AuthForm.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -11,7 +11,6 @@ const AuthForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [isClapping, setIsClapping] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -58,7 +57,6 @@ const AuthForm = () => {
         navigate("/home");
       })
       .catch((err) => {
-        setError(err.message);
         showToast(err.message || "Errore durante il login", "danger");
         console.error(err);
       });
@@ -78,11 +76,9 @@ const AuthForm = () => {
           "success"
         );
         setIsLogin(true);
-        setError("");
         navigate("/");
       })
       .catch((err) => {
-        setError(err.message);
         showToast(err.message || "Errore durante la registrazione", "danger");
         console.error(err);
       });
@@ -102,7 +98,6 @@ const AuthForm = () => {
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
-    setError("");
   };
 
   return (
@@ -111,69 +106,58 @@ const AuthForm = () => {
 
       <div className="board">
         <div className="clapper-static"></div>
-        <Card bg="transparent" border="0" text="white">
-          <Card.Body>
-            <h3 className="form-title">
-              {isLogin ? "FilmInPocket" : "Registrati"}
-            </h3>
+        <div className="text-white">
+          <h3 className="form-title">
+            {isLogin ? "FilmInPocket" : "Registrati"}
+          </h3>
 
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  className="form-control-clapper"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </Form.Group>
+          <form onSubmit={handleSubmit}>
+            <TextInput
+              type="text"
+              placeholder="Username"
+              classNames={{ input: "form-control-clapper" }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              mb="md"
+            />
 
-              {!isLogin && (
-                <Form.Group className="mb-3">
-                  <Form.Control
-                    type="email"
-                    placeholder="Email"
-                    className="form-control-clapper"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </Form.Group>
-              )}
+            {!isLogin && (
+              <TextInput
+                type="email"
+                placeholder="Email"
+                classNames={{ input: "form-control-clapper" }}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                mb="md"
+              />
+            )}
 
-              <Form.Group className="mb-3">
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  className="form-control-clapper"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </Form.Group>
+            <TextInput
+              type="password"
+              placeholder="Password"
+              classNames={{ input: "form-control-clapper" }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              mb="md"
+            />
 
-              <Row>
-                <Col className="d-flex justify-content-center">
-                  <Button
-                    type="submit"
-                    className="action-button w-50"
-                    style={{ backgroundColor: "#d4a24d", border: "none" }}
-                  >
-                    {isLogin ? "Azione!" : "Registrati"}
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
+            <Center>
+              <Button type="submit" unstyled className="action-button w-50">
+                {isLogin ? "Azione!" : "Registrati"}
+              </Button>
+            </Center>
+          </form>
 
-            <div className="toggle-text">
-              {isLogin ? "Non hai un account? " : "Hai già un account? "}
-              <span onClick={toggleForm} className="toggle-link">
-                {isLogin ? "Registrati" : "Accedi"}
-              </span>
-            </div>
-          </Card.Body>
-        </Card>
+          <div className="toggle-text">
+            {isLogin ? "Non hai un account? " : "Hai già un account? "}
+            <span onClick={toggleForm} className="toggle-link">
+              {isLogin ? "Registrati" : "Accedi"}
+            </span>
+          </div>
+        </div>
       </div>
       <ToastMessage
         show={toast.show}
