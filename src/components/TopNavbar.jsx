@@ -1,4 +1,5 @@
-import { Navbar, Container, Nav, Offcanvas } from "react-bootstrap";
+import { Burger, Drawer } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/TopNavbar.css";
 import { GiFilmSpool } from "react-icons/gi";
@@ -10,6 +11,7 @@ import { TfiUser } from "react-icons/tfi";
 
 export default function TopNavbar() {
   const navigate = useNavigate();
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -17,80 +19,84 @@ export default function TopNavbar() {
   };
 
   return (
-    <Navbar
-      expand="lg"
-      variant="dark"
-      fixed="top"
-      className="top-navbar-container"
-    >
-      <Container
-        fluid
-        className="px-3 d-flex justify-content-between align-items-center"
-      >
-        <Navbar.Brand
-          as={Link}
+    <div className="top-navbar-container">
+      <div className="px-3 d-flex justify-content-between align-items-center">
+        <Link
           to="/home"
           className="top-navbar-brand d-flex align-items-center"
         >
           <GiFilmSpool size={32} />
           <span className="ms-2 navbar-title-text">FilmInPocket</span>
-        </Navbar.Brand>
+        </Link>
 
         <div className="d-none d-lg-flex align-items-center gap-5">
-          <Nav.Link
-            as={Link}
+          <Link
             to="/profilo"
             className="top-navbar-link d-flex flex-row"
           >
             <TfiUser size={20} />
             Profilo
-          </Nav.Link>
-          <Nav.Link onClick={handleLogout} className="top-navbar-link">
+          </Link>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLogout();
+            }}
+            className="top-navbar-link"
+          >
             <FaDoorOpen size={20} />
             Logout
-          </Nav.Link>
+          </a>
         </div>
 
-        <Navbar.Toggle aria-controls="navbar-offcanvas" className="d-lg-none" />
-      </Container>
+        <Burger
+          opened={opened}
+          onClick={toggle}
+          className="d-lg-none"
+          color="white"
+          aria-label="Menu"
+        />
+      </div>
 
-      <Navbar.Offcanvas
-        id="navbar-offcanvas"
-        aria-labelledby="navbar-offcanvas-label"
-        placement="end"
-        className="top-navbar-offcanvas bg-dark d-lg-none"
+      <Drawer
+        opened={opened}
+        onClose={close}
+        position="right"
+        title={<span className="menu-off">Menu</span>}
+        classNames={{ content: "top-navbar-offcanvas", header: "top-navbar-offcanvas" }}
       >
-        <Offcanvas.Header closeButton closeVariant="white">
-          <Offcanvas.Title id="navbar-offcanvas-label" className="menu-off">
-            Menu
-          </Offcanvas.Title>
-        </Offcanvas.Header>
-
-        <Offcanvas.Body>
-          <Nav className="d-flex flex-column align-items-start ps-3 gap-2">
-            <Nav.Link as={Link} to="/home" className="top-navbar-link">
-              <TiFilm size={20} />
-              Home
-            </Nav.Link>
-            <Nav.Link as={Link} to="/collection" className="top-navbar-link">
-              <TbCardsFilled size={20} />
-              Collezione
-            </Nav.Link>
-            <Nav.Link as={Link} to="/decks" className="top-navbar-link">
-              <MdOutlineCollectionsBookmark size={20} />
-              Mazzi
-            </Nav.Link>
-            <Nav.Link as={Link} to="/profilo" className="top-navbar-link">
-              <TfiUser size={20} />
-              Profilo
-            </Nav.Link>
-            <Nav.Link onClick={handleLogout} className="top-navbar-link">
-              <FaDoorOpen size={20} />
-              Logout
-            </Nav.Link>
-          </Nav>
-        </Offcanvas.Body>
-      </Navbar.Offcanvas>
-    </Navbar>
+        <div className="d-flex flex-column align-items-start ps-3 gap-2">
+          <Link to="/home" onClick={close} className="top-navbar-link">
+            <TiFilm size={20} />
+            Home
+          </Link>
+          <Link to="/collection" onClick={close} className="top-navbar-link">
+            <TbCardsFilled size={20} />
+            Collezione
+          </Link>
+          <Link to="/decks" onClick={close} className="top-navbar-link">
+            <MdOutlineCollectionsBookmark size={20} />
+            Mazzi
+          </Link>
+          <Link to="/profilo" onClick={close} className="top-navbar-link">
+            <TfiUser size={20} />
+            Profilo
+          </Link>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              close();
+              handleLogout();
+            }}
+            className="top-navbar-link"
+          >
+            <FaDoorOpen size={20} />
+            Logout
+          </a>
+        </div>
+      </Drawer>
+    </div>
   );
 }

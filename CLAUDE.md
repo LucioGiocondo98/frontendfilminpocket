@@ -52,11 +52,13 @@ Regole durante la transizione:
 - `src/components/PersonCard.jsx` (Card → Card/Image/Text Mantine)
 - `src/components/CardPreview.jsx` (div flex → `Center`, nessun import bootstrap da rimuovere)
 - `src/pages/WelcomePage.jsx` — nessun bootstrap presente, nessuna modifica necessaria
+- `src/components/TopNavbar.jsx` (`Navbar`/`Offcanvas` → `Burger`/`Drawer` Mantine + `useDisclosure`, resto tag nativi con classi bootstrap invariate)
+- `src/components/BottomNavbar.jsx` (`Container`/`Row`/`Col` → tag nativi con stesse classi bootstrap; icona `Globe` da `react-bootstrap-icons` → `MdPublic` da `react-icons`)
 
 ### File da migrare
 
 - `src/pages/`: CardDetailsPage.jsx, CollectionPage.jsx, CreateCardPage.jsx, DeleteCardPage.jsx, EditCardPage.jsx, HomePage.jsx, LoginPage.jsx, NotFoundPage.jsx, PackOpenedPage.jsx, ProfilePage.jsx
-- `src/components/`: TopNavbar.jsx, BottomNavbar.jsx (alto blast radius — usati da tutte le page), CardForm.jsx, ImageUpload.jsx, AuthForm.jsx, AdminHomeContent.jsx, AcquirePack.jsx, DeckDetailsModal.jsx, CardGrid.jsx, DeckSidebar.jsx, DeckBuilder.jsx, MainContent.jsx, SidebarFiltri.jsx
+- `src/components/`: CardForm.jsx, ImageUpload.jsx, AuthForm.jsx, AdminHomeContent.jsx, AcquirePack.jsx, DeckDetailsModal.jsx, CardGrid.jsx, DeckSidebar.jsx, DeckBuilder.jsx, MainContent.jsx, SidebarFiltri.jsx
 
 ## Test
 

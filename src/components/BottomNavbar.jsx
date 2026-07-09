@@ -1,5 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
-import { Globe } from "react-bootstrap-icons";
+import { MdPublic } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "../styles/BottomNavbar.css";
 import { MdOutlineCollectionsBookmark } from "react-icons/md";
@@ -8,34 +7,34 @@ import { TbCardsFilled } from "react-icons/tb";
 const BottomNavbar = () => {
   return (
     <div className="bottom-navbar-container bg-dark border-secondary shadow-sm">
-      <Container fluid className="p-0">
-        <Row className="justify-content-evenly text-center gx-0">
-          <Col xs={3} className="bottom-icon p-0">
+      <div className="p-0">
+        <div className="row justify-content-evenly text-center gx-0">
+          <div className="col-3 bottom-icon p-0">
             <Link to="/home" className="d-block py-2 nav-link-custom">
               <TiFilm size={20} />
               <div className="nav-text">Home</div>
             </Link>
-          </Col>
-          <Col xs={3} className="bottom-icon  p-0">
+          </div>
+          <div className="col-3 bottom-icon  p-0">
             <Link to="/collection" className="d-block py-2 nav-link-custom">
               <TbCardsFilled size={20} />
               <div className="nav-text">Collezione</div>
             </Link>
-          </Col>
-          <Col xs={3} className="bottom-icon p-0">
+          </div>
+          <div className="col-3 bottom-icon p-0">
             <Link to="/decks" className="d-block py-2 nav-link-custom">
               <MdOutlineCollectionsBookmark size={20} />
               <div className="nav-text">Deck</div>
             </Link>
-          </Col>
-          <Col xs={3} className="bottom-icon p-0">
+          </div>
+          <div className="col-3 bottom-icon p-0">
             <Link to="/home" className="d-block py-2 nav-link-custom">
-              <Globe size={20} />
+              <MdPublic size={20} />
               <div className="nav-text">Community</div>
             </Link>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
