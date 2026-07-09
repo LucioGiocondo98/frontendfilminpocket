@@ -46,11 +46,17 @@ Regole durante la transizione:
 
 - `src/pages/DeckPage.jsx` (Container → `@mantine/core`)
 - `src/main.jsx` — `MantineProvider` aggiunto (coesiste con Bootstrap CSS)
+- `src/App.jsx` (Container → `Center`, solo in `AuthLayout`)
+- `src/components/ToastMessage.jsx` (Toast/ToastContainer → `Notification`, API pubblica invariata)
+- `src/components/MovieCard.jsx` (Card → Card/Image/Text Mantine)
+- `src/components/PersonCard.jsx` (Card → Card/Image/Text Mantine)
+- `src/components/CardPreview.jsx` (div flex → `Center`, nessun import bootstrap da rimuovere)
+- `src/pages/WelcomePage.jsx` — nessun bootstrap presente, nessuna modifica necessaria
 
 ### File da migrare
 
-- `src/pages/`: CardDetailsPage.jsx, CollectionPage.jsx, CreateCardPage.jsx, DeleteCardPage.jsx, EditCardPage.jsx, HomePage.jsx, LoginPage.jsx, NotFoundPage.jsx, PackOpenedPage.jsx, ProfilePage.jsx, WelcomePage.jsx
-- `src/components/`: TopNavbar.jsx, BottomNavbar.jsx (alto blast radius — usati da tutte le page), ToastMessage.jsx, MovieCard.jsx, PersonCard.jsx, CardPreview.jsx, CardForm.jsx, ImageUpload.jsx, AuthForm.jsx, AdminHomeContent.jsx, AcquirePack.jsx, DeckDetailsModal.jsx, CardGrid.jsx, DeckSidebar.jsx, DeckBuilder.jsx, MainContent.jsx, SidebarFiltri.jsx
+- `src/pages/`: CardDetailsPage.jsx, CollectionPage.jsx, CreateCardPage.jsx, DeleteCardPage.jsx, EditCardPage.jsx, HomePage.jsx, LoginPage.jsx, NotFoundPage.jsx, PackOpenedPage.jsx, ProfilePage.jsx
+- `src/components/`: TopNavbar.jsx, BottomNavbar.jsx (alto blast radius — usati da tutte le page), CardForm.jsx, ImageUpload.jsx, AuthForm.jsx, AdminHomeContent.jsx, AcquirePack.jsx, DeckDetailsModal.jsx, CardGrid.jsx, DeckSidebar.jsx, DeckBuilder.jsx, MainContent.jsx, SidebarFiltri.jsx
 
 ## Test
 

@@ -1,4 +1,12 @@
-import { Toast, ToastContainer } from "react-bootstrap";
+import { useEffect } from "react";
+import { Notification } from "@mantine/core";
+
+const VARIANT_TO_COLOR = {
+  success: "green",
+  danger: "red",
+  warning: "yellow",
+  info: "blue",
+};
 
 export default function ToastMessage({
   show,
@@ -6,14 +14,23 @@ export default function ToastMessage({
   message,
   variant = "success",
 }) {
+  useEffect(() => {
+    if (!show) return;
+    const timer = setTimeout(onClose, 4000);
+    return () => clearTimeout(timer);
+  }, [show, onClose]);
+
+  if (!show) return null;
+
   return (
-    <ToastContainer position="top-end" className="p-3">
-      <Toast onClose={onClose} show={show} delay={4000} autohide bg={variant}>
-        <Toast.Header closeButton>
-          <strong className="me-auto">FilmInPocket</strong>
-        </Toast.Header>
-        <Toast.Body className="text-white">{message}</Toast.Body>
-      </Toast>
-    </ToastContainer>
+    <div style={{ position: "fixed", top: "1rem", right: "1rem", zIndex: 1000 }}>
+      <Notification
+        title="FilmInPocket"
+        color={VARIANT_TO_COLOR[variant] ?? variant}
+        onClose={onClose}
+      >
+        {message}
+      </Notification>
+    </div>
   );
 }

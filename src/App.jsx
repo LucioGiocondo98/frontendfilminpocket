@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { Container } from "react-bootstrap";
+import { Center } from "@mantine/core";
 
 import AuthForm from "./components/AuthForm";
 import HomePage from "./pages/HomePage";
@@ -20,12 +20,9 @@ import ProfilePage from "./pages/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 const AuthLayout = () => (
-  <Container
-    className="d-flex align-items-center justify-content-center"
-    style={{ minHeight: "100vh" }}
-  >
+  <Center style={{ minHeight: "100vh" }}>
     <AuthForm />
-  </Container>
+  </Center>
 );
 
 function App() {

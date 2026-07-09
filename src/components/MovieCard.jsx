@@ -1,9 +1,9 @@
-import { Card } from "react-bootstrap";
+import { Card, Image, Text } from "@mantine/core";
 import pellicola from "../assets/pellicola.jpg";
 import "../styles/Card.css";
 export default function MovieCard({ card }) {
   const getBorderStyle = (rarity) => {
-    switch (card.rarity) {
+    switch (rarity) {
       case "COMMON":
         return "5px solid white";
       case "RARE":
@@ -31,25 +31,21 @@ export default function MovieCard({ card }) {
       }}
     >
       {card.imageUrl && (
-        <Card.Img
-          variant="top"
-          src={card.imageUrl}
-          alt={card.name}
-          style={{
-            height: "200px",
-            objectFit: "cover",
-          }}
-        />
+        <Card.Section>
+          <Image src={card.imageUrl} alt={card.name} h={200} fit="cover" />
+        </Card.Section>
       )}
 
-      <Card.Body
+      <div
         className="m-auto align-items-center px-3"
         style={{
           color: "black",
           borderRadius: "12px",
         }}
       >
-        <Card.Title className="text-center">{card.name}</Card.Title>
+        <Text fw={600} ta="center">
+          {card.name}
+        </Text>
         <ul
           className="px-5"
           style={{
@@ -70,7 +66,7 @@ export default function MovieCard({ card }) {
             <strong>Genere:</strong> <span>{card.genre}</span>
           </li>
         </ul>
-      </Card.Body>
+      </div>
       <div className={`card-rarity-badge ${card.rarity.toLowerCase()}`}>
         {card.rarity}
       </div>

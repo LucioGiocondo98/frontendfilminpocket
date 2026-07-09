@@ -1,3 +1,4 @@
+import { Center } from "@mantine/core";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
 
@@ -13,13 +14,13 @@ const CardPreview = function ({ cardType, formData, imageFile }) {
   const type = cardType?.toUpperCase();
 
   return (
-    <div className="d-flex align-items-center justify-content-center">
+    <Center>
       {type === "MOVIE" ? (
         <MovieCard card={previewCard} />
       ) : (
         <PersonCard card={previewCard} />
       )}
-    </div>
+    </Center>
   );
 };
 
